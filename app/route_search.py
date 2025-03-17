@@ -20,7 +20,6 @@ def getting_route(line: str, path: str, variant: str = None):
         if result is None:
             return f"No data found for variant {variant} of line {line}"
 
-        # Extract "nazwa_zespolu" values
         stops = [stop_data["nazwa_zespolu"] for stop_data in result.values()]
         return json.dumps(stops, indent=4, ensure_ascii=False)
 
