@@ -11,6 +11,10 @@ def getting_route(line: str, path: str, variant: str = None):
     if line_data is None:
         return f"No data found for line {line}"
 
+    if variant == "SHOW":
+        variants = list(line_data.keys())
+        return json.dumps(variants, indent=4, ensure_ascii=False)
+
     if variant != "0":
         result = line_data.get(variant)
         if result is None:
@@ -25,7 +29,11 @@ def getting_route(line: str, path: str, variant: str = None):
 
 
 while True:
-    line = input("Line: ")
-    type = input("Type: ")
+    line = input("Line: ").upper()
+    type = input("Type: ").upper()
+
+    if line == "QUIT" or type == "QUIT":
+        print("\n shutting down \n")
+        break
 
     print(getting_route(line, final_path, type))
