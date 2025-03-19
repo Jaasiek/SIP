@@ -3,27 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
     <title>Metro</title>
+    <link rel="stylesheet" href="./metro.css" />
   </head>
   <body>
     <header>
-      <h1>M1</h1>
-      <div id="direction">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="48px"
-          viewBox="0 -960 960 960"
-          width="48px"
-          fill="#EA3323"
-        >
-          <path
-            d="M686-450H160v-60h526L438-758l42-42 320 320-320 320-42-42 248-248Z"
-          />
-        </svg>
-        <p id="direction">Kabaty</p>
+      <div id="left"></div>
+
+      <div id="right">
+        <div id="direction">
+          <svg
+            width="100px"
+            height="100px"
+            viewBox="0 0 24.00 24.00"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke="#EA3323"
+            transform="matrix(1, 0, 0, 1, 0, 0)"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="#CCCCCC"
+              stroke-width="0.048"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M5 12H19M19 12L13 6M19 12L13 18"
+                stroke="EA3323"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </g>
+          </svg>
+          <p id="direction"></p>
+        </div>
+        <div id="route"><b id="route_marker">TRASA:</b></div>
       </div>
-      <div id="route">Trasa:</div>
     </header>
+    <hr />
     <main></main>
   </body>
+  <script>
+    const stations = [
+      "MŁOCINY",
+      "WAWRZYSZEW",
+      "STARE BIELANY",
+      "SŁODOWIEC",
+      "MARYMONT",
+      "PLAC WILSONA",
+      "DWORZEC GDAŃSKI",
+      "RATUSZ ARSENAŁ",
+      "ŚWIĘTOKRZYSKA",
+      "CENTRUM",
+      "POLITECHNIKA",
+      "POLE MOKOTOWSKIE",
+      "RACŁAWICKA",
+      "WIERZBNO",
+      "WILANOWSKA",
+      "SŁUŻEW",
+      "URSYNÓW",
+      "STOKŁOSY",
+      "IMIELIN",
+      "NATOLIN",
+      "KABATY",
+    ];
+
+    const routeDiv = document.querySelector("#route");
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("scrolling-wrapper");
+
+    const routeText = document.createElement("span");
+    routeText.classList.add("scrolling-text");
+    routeText.innerText = stations.join(", ");
+
+    wrapper.appendChild(routeText);
+    routeDiv.appendChild(wrapper);
+  </script>
 </html>
