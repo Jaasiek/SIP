@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Line select</title>
+    <script>
+      function post_line(event) {
+        event.preventDefault();
+
+        const form = document.getElementById("form");
+        const data = {
+          line: form.elements["line"].value,
+          variant: form.elements["variant"].value,
+        };
+
+        fetch("http://127.0.0.1:5000/route_get", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
+      }
+    </script>
+  </head>
+  <body>
+    <form onsubmit="post_line(event)" id="form">
+      <input type="text" name="line" placeholder="Line" />
+      <input type="text" name="variant" placeholder="Variant" />
+      <button type="submit">Select</button>
+    </form>
+  </body>
+</html>

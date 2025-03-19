@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>POST to Flask</title>
+  </head>
+  <body>
+    <button id="sendData">Send Data</button>
+
+    <script>
+      document.getElementById("sendData").addEventListener("click", () => {
+        const data = {
+          name: "John Doe",
+          age: 30,
+        };
+
+        fetch("http://127.0.0.1:5000/route_get", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((result) => console.log("Success:", result))
+          .catch((error) => console.error("Error:", error));
+      });
+    </script>
+  </body>
+</html>

@@ -11,10 +11,11 @@
     />
     <title>Metro</title>
     <link rel="stylesheet" href="./metro.css" />
+    <script src="./metro.js" defer></script>
   </head>
   <body>
     <header>
-      <div id="left"></div>
+      <div id="left">M1</div>
 
       <div id="right">
         <div id="direction">
@@ -45,7 +46,7 @@
               ></path>
             </g>
           </svg>
-          <p id="direction"></p>
+          <p id="direction">KABATY</p>
         </div>
         <div id="route"><b id="route_marker">TRASA:</b></div>
       </div>
@@ -53,40 +54,4 @@
     <hr />
     <main></main>
   </body>
-  <script>
-    const stations = [
-      "MŁOCINY",
-      "WAWRZYSZEW",
-      "STARE BIELANY",
-      "SŁODOWIEC",
-      "MARYMONT",
-      "PLAC WILSONA",
-      "DWORZEC GDAŃSKI",
-      "RATUSZ ARSENAŁ",
-      "ŚWIĘTOKRZYSKA",
-      "CENTRUM",
-      "POLITECHNIKA",
-      "POLE MOKOTOWSKIE",
-      "RACŁAWICKA",
-      "WIERZBNO",
-      "WILANOWSKA",
-      "SŁUŻEW",
-      "URSYNÓW",
-      "STOKŁOSY",
-      "IMIELIN",
-      "NATOLIN",
-      "KABATY",
-    ];
-
-    const routeDiv = document.querySelector("#route");
-    const wrapper = document.createElement("div");
-    wrapper.classList.add("scrolling-wrapper");
-
-    const routeText = document.createElement("span");
-    routeText.classList.add("scrolling-text");
-    routeText.innerText = stations.join(", ");
-
-    wrapper.appendChild(routeText);
-    routeDiv.appendChild(wrapper);
-  </script>
 </html>

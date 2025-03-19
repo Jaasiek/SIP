@@ -22,6 +22,10 @@ div#direction {
   align-items: center;
 }
 
+div#right {
+  width: 100%;
+}
+
 p#direction {
   font-size: 100px;
   margin: 0;
@@ -35,6 +39,7 @@ p#direction {
   white-space: nowrap;
   position: relative;
   font-size: 75px;
+  width: 100%;
 }
 
 #route_marker {
@@ -45,19 +50,8 @@ p#direction {
 
 .scrolling-text {
   display: inline-block;
-  font-size: 75px;
-  color: #333;
   white-space: nowrap;
-  animation: scroll-left 20s linear infinite;
-}
-
-@keyframes scroll-left {
-  from {
-    transform: translateX(100vw); /* Start from the edge of the screen */
-  }
-  to {
-    transform: translateX(
-      calc(-100% - 20px)
-    ); /* Move it off-screen based on text width */
-  }
+  font-size: 75px; /* Increased size */
+  color: #333;
+  position: absolute;
 }
