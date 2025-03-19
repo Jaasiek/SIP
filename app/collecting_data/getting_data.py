@@ -28,7 +28,13 @@ def public_transport_stops_get(path) -> None:
 
 
 if __name__ == "__main__":
-    public_transport_routes_get(routes_path)
-    public_transport_stops_get(stops_path)
-    naming_stops(routes_path=routes_path, stops_path=stops_path, final_path=final_path)
-    sorting_data(final_path)
+    try:
+        public_transport_routes_get(routes_path)
+        public_transport_stops_get(stops_path)
+        naming_stops(
+            routes_path=routes_path, stops_path=stops_path, final_path=final_path
+        )
+        sorting_data(final_path)
+        print("power up complete")
+    except:
+        print("Internet connection fail")
