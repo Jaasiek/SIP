@@ -10,20 +10,25 @@ function load_line() {
     .then((response) => response.json())
     .then((data) => {
       stations = data.stops;
-      line_div.innerText = data.line;
-      direction_div.innerText = stations[stations.length - 1];
-      routeText.classList.add("scrolling-text");
-      routeText.innerText = stations.join(" - ");
-      routeDiv.appendChild(routeText);
-      console.log(data);
 
-      // Call startScrolling only after the text has been added to the DOM
-      startScrolling();
+      if (stations.length > 0) {
+        line_div.innerText = data.line;
+        direction_div.innerText = stations[stations.length - 1];
+        routeText.classList.add("scrolling-text");
+        routeText.innerText = stations.join(" - ");
+        routeDiv.appendChild(routeText);
+
+        startScrolling();
+      } else {
+        console.log("No data yet");
+        setTimeout(() => {
+          load_line();
+        }, 1000);
+      }
     });
 }
 
 function startScrolling() {
-  // Ensure the element has been fully rendered before calculating the width
   setTimeout(() => {
     const textWidth = routeText.getBoundingClientRect().width;
     const screenWidth = window.innerWidth;
@@ -55,7 +60,17 @@ function startScrolling() {
     routeText.style.transform = `translateX(${screenWidth}px)`;
 
     requestAnimationFrame(scroll);
-  }, 100); // Use a slight delay to ensure the element has rendered
+  }, 100);
 }
 
-load_line();
+if (stations.length === 0) {
+  setTimeout(() => {
+    load_line();
+  }, 1000);
+}
+
+document.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") {
+    load_line();
+  }
+});

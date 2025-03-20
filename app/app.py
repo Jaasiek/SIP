@@ -22,6 +22,7 @@ def get_route():
         stops = getting_route(line, variant)
         return jsonify({"success": True, "stops": stops})  # No need for json.dumps()
     except KeyError:
+        stops = []
         return jsonify({"success": False})
 
 

@@ -52,7 +52,7 @@ div#right {
 .scrolling-text {
   display: inline-block;
   white-space: nowrap;
-  font-size: 75px; /* Increased size */
+  font-size: 75px;
   color: #333;
   position: absolute;
 }
