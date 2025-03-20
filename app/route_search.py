@@ -9,25 +9,21 @@ def getting_route(line: str, variant: str = None):
 
     line_data = data.get(line)
     if line_data is None:
-        return {
-            "error": f"No data found for line {line}"
-        }  # Return a dictionary instead of a string
+        raise KeyError("No data found for line")
 
     if variant == "SHOW":
         variants = list(line_data.keys())
-        return variants  # Return as a Python list (Flask will convert it to JSON automatically)
+        return variants
 
     if variant != "0":
         result = line_data.get(variant)
         if result is None:
-            return {
-                "error": f"No data found for variant {variant} of line {line}"
-            }  # Return dict instead of string
+            raise KeyError(f"No data found for variant {variant} of line {line}")
 
         stops = [stop_data["nazwa_zespolu"] for stop_data in result.values()]
-        return stops  # Return as a Python list
+        return stops
 
-    return line_data  # Return as a dictionary (Flask will convert it)
+    return line_data
 
 
 # while True:

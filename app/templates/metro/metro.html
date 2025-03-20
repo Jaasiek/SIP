@@ -10,12 +10,18 @@
       rel="stylesheet"
     />
     <title>Metro</title>
-    <link rel="stylesheet" href="./metro.css" />
-    <script src="./metro.js" defer></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/metro/metro.css') }}"
+    />
+    <script
+      src="{{ url_for('static', filename='/metro/metro.js') }}"
+      defer
+    ></script>
   </head>
   <body>
     <header>
-      <div id="left">M1</div>
+      <div id="line"></div>
 
       <div id="right">
         <div id="direction">
@@ -46,7 +52,7 @@
               ></path>
             </g>
           </svg>
-          <p id="direction">KABATY</p>
+          <p class="direction"></p>
         </div>
         <div id="route"><b id="route_marker">TRASA:</b></div>
       </div>
