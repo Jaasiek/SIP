@@ -56,7 +56,7 @@ function startScrolling() {
       } else {
         if (!backgroundChanged) {
           const header = document.querySelector("header");
-          header.style.backgroundColor = "red";
+          // header.style.backgroundColor = "red";
           backgroundChanged = true;
         }
         startTime = null;

@@ -37,6 +37,11 @@ def route_get():
     )
 
 
+@app.get("/bus/info_screen")
+def bus_info_sceen():
+    return render_template("/bus/info_screen.html")
+
+
 @app.get("/metro")
 def metro_screen():
     return render_template("/metro/metro.html")
