@@ -4,26 +4,30 @@ final_path = "data/routes/stops.json"
 
 
 def getting_route(line: str, variant: str = None):
-    with open("data/routes/stops.json", "r", encoding="utf-8") as file:
+    with open(final_path, "r", encoding="utf-8") as file:
         data = json.load(file)
 
     line_data = data.get(line)
     if line_data is None:
-        raise KeyError("No data found for line")
+        raise KeyError(f"No data found for line {line}")
 
     if variant == "SHOW":
         variants = list(line_data.keys())
-        return variants
+        return {"line": line, "variants": variants, "success": True}
 
     if variant != "0":
         result = line_data.get(variant)
         if result is None:
             raise KeyError(f"No data found for variant {variant} of line {line}")
 
-        stops = [stop_data["nazwa_zespolu"] for stop_data in result.values()]
-        return stops
+        stops = [
+            {"name": stop_data["nazwa_zespolu"], "type": stop_data["typ"]}
+            for stop_data in result.values()  # Order preserved
+        ]
 
-    return line_data
+        return {"stops": stops}
+
+    return {"line": line, "variants": list(line_data.keys()), "success": True}
 
 
 # while True:

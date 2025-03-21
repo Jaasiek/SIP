@@ -10,10 +10,10 @@ function load_line() {
   fetch("/route_get")
     .then((response) => response.json())
     .then((data) => {
+      line_div.innerText = data.line;
       stations = data.stops;
 
       if (stations.length > 0) {
-        line_div.innerText = data.line;
         direction_div.innerText = stations.pop();
         routeText.classList.add("scrolling-text");
         routeText.innerText = stations.join(" - ");

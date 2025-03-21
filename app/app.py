@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify, render_template, json
-from route_search import getting_route
+from flask import Flask, request, jsonify, render_template
+from scripts.route_search import getting_route
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def get_route():
     variant = data.get("variant")
     try:
         stops = getting_route(line, variant)
-        return jsonify({"success": True, "stops": stops})  # No need for json.dumps()
+        return jsonify({"success": True, "route": stops})
     except KeyError:
         stops = []
         return jsonify({"success": False})
@@ -30,7 +30,7 @@ def get_route():
 def route_get():
     return jsonify(
         {
-            "stops": stops,
+            "route": stops,
             "line": line,
             "success": True,
         }
