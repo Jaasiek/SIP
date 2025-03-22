@@ -25,13 +25,47 @@
           .then((result) => console.log(result))
           .catch((error) => console.error(error));
       }
+
+      function next_stop() {
+        const data = {
+          next_stop: true,
+        };
+        fetch("http://127.0.0.1:5000/next_stop", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
+      }
+
+      function current_stop() {
+        const data = {
+          current_stop: true,
+        };
+        fetch("http://127.0.0.1:5000/current_stop", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
+      }
     </script>
   </head>
   <body>
     <form onsubmit="post_line(event)" id="form">
-      <input type="text" name="line" placeholder="Line" />
-      <input type="text" name="variant" placeholder="Variant" />
+      <input type="text" name="line" placeholder="Line" required />
+      <input type="text" name="variant" placeholder="Variant" required />
       <button type="submit">Select</button>
     </form>
+    <button onclick="next_stop()">Next stop</button>
+    <button onclick="current_stop()">Current stop</button>
   </body>
 </html>

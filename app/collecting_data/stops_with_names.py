@@ -1,12 +1,15 @@
 import json
 
 
-def naming_stops(routes_path, stops_path, final_path) -> None:
+def naming_stops(routes_path, stops_path, stops_info_path, final_path) -> None:
     with open(routes_path, "r", encoding="utf-8") as f:
         routes_data = json.load(f)
 
     with open(stops_path, "r", encoding="utf-8") as f:
         stops_data = json.load(f)
+
+    with open(stops_info_path, "r", encoding="utf-8") as f:
+        stops_info_data = json.load(f)
 
     zespol_to_nazwa = {}
     for stop in stops_data["result"]:
@@ -21,6 +24,8 @@ def naming_stops(routes_path, stops_path, final_path) -> None:
         if zespol and nazwa_zespolu:
             zespol_to_nazwa[zespol] = nazwa_zespolu
 
+    ulica_to_nazwa = stops_info_data["result"]["ulice"]
+
     stops_with_names = {}
     for line, directions in routes_data["result"].items():
         stops_with_names[line] = {}
@@ -28,10 +33,14 @@ def naming_stops(routes_path, stops_path, final_path) -> None:
             stops_with_names[line][direction] = {}
             for stop_id, stop_data in stops.items():
                 nr_zespolu = stop_data["nr_zespolu"]
+                ulica_id = stop_data["ulica_id"]
+
                 nazwa_zespolu = zespol_to_nazwa.get(nr_zespolu, "Unknown")
+                nazwa_ulicy = ulica_to_nazwa.get(ulica_id, "Unknown")
                 stops_with_names[line][direction][stop_id] = {
                     "odleglosc": stop_data["odleglosc"],
                     "ulica_id": stop_data["ulica_id"],
+                    "nazwa_ulicy": nazwa_ulicy,
                     "nr_zespolu": nr_zespolu,
                     "nazwa_zespolu": nazwa_zespolu,
                     "typ": stop_data["typ"],

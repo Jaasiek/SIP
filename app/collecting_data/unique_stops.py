@@ -16,4 +16,4 @@ def unique_stops(stops_path):
     return nazwa_zespolu_list
 
 
-unique_stops("data/routes/public_transport_stops.json")
+print(unique_stops("data/routes/public_transport_stops.json"))

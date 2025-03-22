@@ -21,21 +21,29 @@ def getting_route(line: str, variant: str = None):
             raise KeyError(f"No data found for variant {variant} of line {line}")
 
         stops = [
-            {"name": stop_data["nazwa_zespolu"], "type": stop_data["typ"]}
-            for stop_data in result.values()  # Order preserved
+            {
+                "name": stop_data["nazwa_zespolu"],
+                "type": stop_data["typ"],
+                "stop_number": stop_data["nr_przystanku"],
+                "stop_street": stop_data["nazwa_ulicy"],
+            }
+            for stop_data in result.values()
         ]
 
-        return {"stops": stops}
+        for stop in stops:
+            if stop["type"] == "4" or stop["type"] == 5:
+                direction = stop["name"]
+        else:
+            direction = stops[-1]["name"]
+
+        streets = []
+        previoust_stop = None
+        for stop_data in result.values():
+            current_street_name = stop_data["nazwa_ulicy"]
+            if current_street_name != previoust_stop:
+                streets.append(current_street_name)
+                previoust_stop = current_street_name
+
+        return {"stops": stops, "streets": streets, "direction": direction}
 
     return {"line": line, "variants": list(line_data.keys()), "success": True}
-
-
-# while True:
-#     line = input("Line: ").upper()
-#     type = input("Type: ").upper()
-
-#     if line == "QUIT" or type == "QUIT":
-#         print("\n shutting down \n")
-#         break
-
-#     print(getting_route(line, type))
