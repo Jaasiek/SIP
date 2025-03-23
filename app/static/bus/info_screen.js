@@ -2,6 +2,9 @@ let streets = [];
 let previoust_stop = null;
 let previoust_stop_number = null;
 let scrollingPaused = false;
+let activeScreen = null;
+let loaded = false;
+let timeBoardTimeout = null;
 
 const routeDiv = document.querySelector("#route");
 const routeText = document.createElement("span");
@@ -16,29 +19,37 @@ const header = document.querySelector("header");
 const time_board = document.querySelector("#blue_board");
 const stop = document.querySelector("#stop_info");
 
-function load_line() {
-  fetch("/route_get")
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success == true) {
-        streets = data.route.streets;
+socket.on("next_stop", (data) => {
+  nextStop(data);
+});
 
-        if (streets.length > 0) {
-          line_div.innerText = data.line;
-          direction_div.innerText = data.route.direction;
-          routeText.classList.add("scrolling-text");
-          routeText.innerText = streets.join(" - ");
-          routeDiv.appendChild(routeText);
+socket.on("current_stop", (data) => {
+  current_stop(data);
+});
 
-          startScrolling();
-        }
-      } else {
-        console.log("No data yet");
-        setTimeout(() => {
-          load_line();
-        }, 1000);
+socket.on("update_route", (data) => {
+  loaded = true;
+  load_line(data);
+});
+
+function load_line(data) {
+  if (loaded) {
+    if (data.success == true) {
+      streets = data.route.streets;
+
+      if (streets.length > 0) {
+        line_div.innerText = data.line;
+        direction_div.innerText = data.route.direction;
+        routeText.classList.add("scrolling-text");
+        routeText.innerText = streets.join(" - ");
+        routeDiv.appendChild(routeText);
+
+        startScrolling();
       }
-    });
+    } else {
+      console.log("No data yet");
+    }
+  }
 }
 
 function blue_board() {
@@ -88,7 +99,9 @@ function blue_board() {
 }
 
 function startScrolling() {
-  if (scrollingPaused) return;
+  if (scrollingPaused || activeScreen !== null) return;
+  activeScreen = "time_board";
+
   const textWidth = routeText.getBoundingClientRect().width;
   const screenWidth = window.innerWidth;
   const totalDistance = textWidth;
@@ -100,7 +113,7 @@ function startScrolling() {
   let currentX = screenWidth;
 
   function scroll(timestamp) {
-    if (scrollingPaused) return;
+    if (scrollingPaused || activeScreen !== "time_board") return;
     if (!startTime) startTime = timestamp;
     const progress = timestamp - startTime;
 
@@ -114,15 +127,16 @@ function startScrolling() {
       routeText.style.transform = `translateX(${screenWidth}px)`;
 
       header.style.display = "none";
+      time_board_display = true;
       time_board.style.display = "flex";
 
-      setTimeout(() => {
-        time_board.style.display = "none";
-        header.style.display = "flex";
-
-        setTimeout(() => {
+      timeBoardTimeout = setTimeout(() => {
+        if (activeScreen === "time_board") {
+          time_board.style.display = "none";
+          header.style.display = "flex";
+          activeScreen = null;
           startScrolling();
-        }, 500);
+        }
       }, 5000);
     }
   }
@@ -130,69 +144,73 @@ function startScrolling() {
   requestAnimationFrame(scroll);
 }
 
-function nextStop() {
-  fetch("/next_stop")
-    .then((response) => response.json())
-    .then((data) => {
-      if (!data.success) {
-        console.log("No data yet");
-        return;
+function nextStop(data) {
+  if (!data.success) {
+    console.log("No data yet");
+    return;
+  }
+
+  if (
+    data.next_stop !== previoust_stop ||
+    data.stop_number !== previoust_stop_number
+  ) {
+    previoust_stop = data.next_stop;
+    previoust_stop_number = data.stop_number;
+    stop_name.style.color = "black";
+    info.style.color = "black";
+
+    if (activeScreen === "time_board" && timeBoardTimeout) {
+      clearTimeout(timeBoardTimeout);
+      time_board.style.display = "none";
+    }
+
+    scrollingPaused = true;
+    activeScreen = "next_stop";
+    header.style.display = "none";
+
+    info.innerText = "Następny przystanek:";
+    stop_name.innerText = data.next_stop;
+
+    setTimeout(() => {
+      if (activeScreen === "next_stop") {
+        info.innerText = "";
+        stop_name.innerText = "";
+        scrollingPaused = false;
+        header.style.display = "flex";
+        activeScreen = null;
+        startScrolling();
       }
-
-      if (
-        data.next_stop !== previoust_stop ||
-        data.stop_number !== previoust_stop_number
-      ) {
-        previoust_stop = data.next_stop;
-        previoust_stop_number = data.stop_number;
-        stop_name.style.color = "black";
-        info.style.color = "black";
-
-        scrollingPaused = true;
-        header.style.display = "none";
-
-        info.innerText = "Następny przystanek:";
-        stop_name.innerText = data.next_stop;
-
-        setTimeout(() => {
-          info.innerText = "";
-          stop_name.innerText = "";
-          scrollingPaused = false;
-          header.style.display = "flex";
-          startScrolling();
-        }, 5000);
-      }
-    });
+    }, 10000);
+  }
 }
 
-function current_stop() {
-  fetch("/current_stop")
-    .then((response) => response.json())
-    .then((data) => {
-      if (!data.success) {
-        console.log("No data yet");
-        return;
-      }
-      if (
-        data.current_stop !== previoust_stop ||
-        data.stop_number !== previoust_stop_number
-      ) {
-        scrollingPaused = true;
-        header.style.display = "none";
-        info.style.color = "red";
-        info.innerText = "Przystanek:";
-        stop_name.style.color = "red";
-        stop_name.innerText = data.current_stop;
+function current_stop(data) {
+  if (!data.success) {
+    console.log("No data yet");
+    return;
+  }
 
-        setTimeout(() => {
-          info.innerText = "";
-          stop_name.innerText = "";
-          scrollingPaused = false;
-          header.style.display = "flex";
-          startScrolling();
-        }, 5000);
-      }
-    });
+  if (activeScreen === "time_board" && timeBoardTimeout) {
+    clearTimeout(timeBoardTimeout);
+    time_board.style.display = "none";
+  }
+
+  scrollingPaused = true;
+  header.style.display = "none";
+
+  info.style.color = "red";
+  info.innerText = "Przystanek:";
+  stop_name.style.color = "red";
+  stop_name.innerText = data.current_stop;
+
+  setTimeout(() => {
+    info.innerText = "";
+    stop_name.innerText = "";
+    scrollingPaused = false;
+    header.style.display = "flex";
+    activeScreen = null;
+    startScrolling();
+  }, 10000);
 }
 
 if (streets.length === 0) {
@@ -207,17 +225,6 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
-document.addEventListener("keyup", (event) => {
-  if (event.key === " ") {
-    nextStop();
-  }
-});
-
 setInterval(() => {
   blue_board();
 }, 500);
-
-setInterval(() => {
-  nextStop();
-  // setTimeout(current_stop, 2000);
-}, 5000);

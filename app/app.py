@@ -1,7 +1,9 @@
 from flask import Flask, request, jsonify, render_template
+from flask_socketio import SocketIO
 from scripts.route_search import getting_route
 
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 stops = []
 
@@ -22,13 +24,18 @@ def get_route():
     variant = data.get("variant")
     try:
         stops = getting_route(line, variant)
-        print(stops)
-        return jsonify(
+        socketio.emit(
+            "update_route",
             {
                 "success": True,
                 "route": stops,
                 "line": line,
-                "strets": stops["streets"],
+                "streets": stops["streets"],
+            },
+        )
+        return jsonify(
+            {
+                "success": True,
             }
         )
     except KeyError:
@@ -59,9 +66,8 @@ def route_get():
 
 @app.post("/next_stop")
 def next_stop_post():
-    global stop_iterator
-    global stop_name
-    global stop_number
+    global stop_iterator, stop_name, stop_number
+
     stop_name = stops["stops"][stop_iterator]["name"]
     stop_type = stops["stops"][stop_iterator]["type"]
     stop_number = stops["stops"][stop_iterator]["stop_number"]
@@ -69,68 +75,22 @@ def next_stop_post():
     if stop_type == "2":
         stop_name = f"{stop_name} - NŻ"
 
-    return jsonify(
-        {
-            "next_stop": stop_name,
-            "stop_number": stop_number,
-            "success": True,
-        }
+    socketio.emit(
+        "next_stop",
+        {"next_stop": stop_name, "stop_number": stop_number, "success": True},
     )
-
-
-@app.get("/next_stop")
-def next_stop_get():
-    global stop_iterator
-    global stop_name
-    try:
-        return jsonify(
-            {
-                "next_stop": stop_name,
-                "stop_number": stop_number,
-                "success": True,
-            },
-        )
-    except:
-        return jsonify(
-            {
-                "messsge": "No data yet",
-                "success": False,
-            }
-        )
+    return jsonify({"success": True})
 
 
 @app.post("/current_stop")
 def current_stop_post():
-    global stop_name
-    global stop_number
-    return jsonify(
-        {
-            "current_stop": stop_name,
-            "stop_number": stop_number,
-            "success": True,
-        }
+    global stop_name, stop_name
+
+    socketio.emit(
+        "current_stop",
+        {"current_stop": stop_name, "stop_number": stop_number, "success": True},
     )
-
-
-@app.get("/current_stop")
-def current_stop_get():
-    global stop_name
-    global stop_number
-    try:
-        return jsonify(
-            {
-                "current_stop": stop_name,
-                "stop_number": stop_number,
-                "success": True,
-            },
-        )
-    except:
-        return jsonify(
-            {
-                "messsge": "No data yet",
-                "success": False,
-            }
-        )
+    return jsonify({"success": True})
 
 
 @app.get("/bus/info_screen")
@@ -144,4 +104,4 @@ def metro_screen():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
