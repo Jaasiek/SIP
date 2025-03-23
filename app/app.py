@@ -17,11 +17,11 @@ def home_page():
 
 @app.post("/route_post")
 def get_route():
-    global stops
-    global line
+    global stops, line, stop_iterator
     data = request.get_json()
     line = data.get("line")
     variant = data.get("variant")
+    stop_iterator = 0
     try:
         stops = getting_route(line, variant)
         socketio.emit(
