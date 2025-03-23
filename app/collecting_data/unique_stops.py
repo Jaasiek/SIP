@@ -16,4 +16,10 @@ def unique_stops(stops_path):
     return nazwa_zespolu_list
 
 
-print(unique_stops("data/routes/public_transport_stops.json"))
+print(
+    len(
+        unique_stops(
+            "C:/Users/janek/Desktop/bus-display-flask/data/routes/public_transport_stops.json"
+        )
+    )
+)
