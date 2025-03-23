@@ -212,7 +212,7 @@ function current_stop(data) {
   scrollingPaused = true;
   header.style.display = "none";
 
-  if (data.stop_type == "3" || data.stop_type == "4") {
+  if (data.stop_type == "4") {
     const audio = new Audio(
       `http://127.0.0.1:5000/last_stop_announcement/${encodeURIComponent(
         data.current_stop
