@@ -1,13 +1,17 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_file, Response
 from flask_socketio import SocketIO
+import os
 from scripts.route_search import getting_route
+from scripts.sanitize_filename import sanitize_filename
+from scripts.announcements_stream import stream_audio
+
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 stops = []
-
 stop_iterator = 0
+ANNOUNCEMENTS_FOLDER = "../data/announcements"
 
 
 @app.route("/", methods=["GET"])
@@ -66,31 +70,91 @@ def route_get():
 
 @app.post("/next_stop")
 def next_stop_post():
-    global stop_iterator, stop_name, stop_number
+    global stop_iterator, stop_name, stop_number, stop_street, stop_type
 
     stop_name = stops["stops"][stop_iterator]["name"]
     stop_type = stops["stops"][stop_iterator]["type"]
     stop_number = stops["stops"][stop_iterator]["stop_number"]
+    stop_street = stops["stops"][stop_iterator]["stop_street"]
     stop_iterator += 1
     if stop_type == "2":
         stop_name = f"{stop_name} - NŻ"
 
     socketio.emit(
         "next_stop",
-        {"next_stop": stop_name, "stop_number": stop_number, "success": True},
+        {
+            "next_stop": stop_name,
+            "stop_number": stop_number,
+            "success": True,
+        },
     )
     return jsonify({"success": True})
 
 
 @app.post("/current_stop")
 def current_stop_post():
-    global stop_name, stop_name
+    global stop_name, stop_name, stop_street, stop_type
 
     socketio.emit(
         "current_stop",
-        {"current_stop": stop_name, "stop_number": stop_number, "success": True},
+        {
+            "current_stop": stop_name,
+            "stop_number": stop_number,
+            "stop_street": stop_street,
+            "stop_type": stop_type,
+            "success": True,
+        },
     )
     return jsonify({"success": True})
+
+
+@app.get("/next_stop_announcement/<string:filename>")
+def next_stop_announcement(filename: str):
+    filename = sanitize_filename(filename)
+
+    next_stop = "next_stop.mp3"
+    on_request = "on_request.mp3"
+
+    if filename.endswith(" - NŻ.mp3"):
+        filename = filename.replace(" - NŻ.mp3", "")
+        filename = f"{filename}.mp3"
+        filenames = [next_stop, filename, on_request]
+    else:
+        filenames = [next_stop, filename]
+
+    return Response(
+        stream_audio(filenames, "../../data/announcements"), mimetype="audio/mpeg"
+    )
+
+
+@app.get("/current_stop_announcement/<string:filename>")
+def current_stop_announcement(filename):
+    filename = sanitize_filename(filename)
+
+    on_request = "on_request.mp3"
+
+    if filename.endswith(" - NŻ.mp3"):
+        filename = filename.replace(" - NŻ.mp3", "")
+        filename = f"{filename}.mp3"
+        filenames = [filename, on_request]
+    else:
+        filenames = [filename]
+
+    return Response(
+        stream_audio(filenames, "../../data/announcements"), mimetype="audio/mpeg"
+    )
+
+
+@app.get("/last_stop_announcement/<string:filename>")
+def last_stop_announcement(filename):
+    filename = sanitize_filename(filename)
+
+    last_stop = "last_stop.mp3"
+    filenames = [filename, last_stop]
+
+    return Response(
+        stream_audio(filenames, "../../data/announcements"), mimetype="audio/mpeg"
+    )
 
 
 @app.get("/bus/info_screen")

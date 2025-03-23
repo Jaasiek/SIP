@@ -57,6 +57,17 @@
           .then((result) => console.log(result))
           .catch((error) => console.error(error));
       }
+      function announcement() {
+        const stopName = "rondo ONZ.mp3"; // Przykładowa nazwa przystanku
+        const url = `http://127.0.0.1:5000/next_stop_announcement/${encodeURIComponent(
+          stopName
+        )}`;
+
+        const audio = new Audio(url);
+        audio.play().catch((error) => {
+          console.error("Błąd podczas odtwarzania:", error);
+        });
+      }
     </script>
   </head>
   <body>
@@ -67,5 +78,6 @@
     </form>
     <button onclick="next_stop()">Next stop</button>
     <button onclick="current_stop()">Current stop</button>
+    <button onclick="announcement()">Ogłosznie</button>
   </body>
 </html>

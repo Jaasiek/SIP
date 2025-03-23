@@ -157,6 +157,7 @@ function nextStop(data) {
     previoust_stop = data.next_stop;
     previoust_stop_number = data.stop_number;
     stop_name.style.color = "black";
+    stop_name.style.fontWeight = "bold";
     info.style.color = "black";
 
     if (activeScreen === "time_board" && timeBoardTimeout) {
@@ -167,6 +168,16 @@ function nextStop(data) {
     scrollingPaused = true;
     activeScreen = "next_stop";
     header.style.display = "none";
+
+    const audio = new Audio(
+      `http://127.0.0.1:5000/next_stop_announcement/${encodeURIComponent(
+        data.next_stop
+      )}.mp3`
+    );
+
+    audio.play().catch((error) => {
+      console.log("Błąd podczas odtwarzania:", error);
+    });
 
     info.innerText = "Następny przystanek:";
     stop_name.innerText = data.next_stop;
@@ -189,6 +200,9 @@ function current_stop(data) {
     console.log("No data yet");
     return;
   }
+  stop_name.style.color = "red";
+  stop_name.style.fontWeight = "bold";
+  info.style.color = "red";
 
   if (activeScreen === "time_board" && timeBoardTimeout) {
     clearTimeout(timeBoardTimeout);
@@ -198,9 +212,29 @@ function current_stop(data) {
   scrollingPaused = true;
   header.style.display = "none";
 
-  info.style.color = "red";
+  if (data.stop_type == "3" || data.stop_type == "4") {
+    const audio = new Audio(
+      `http://127.0.0.1:5000/last_stop_announcement/${encodeURIComponent(
+        data.current_stop
+      )}.mp3`
+    );
+
+    audio.play().catch((error) => {
+      console.log("Błąd podczas odtwarzania:", error);
+    });
+  } else {
+    const audio = new Audio(
+      `http://127.0.0.1:5000/current_stop_announcement/${encodeURIComponent(
+        data.current_stop
+      )}.mp3`
+    );
+
+    audio.play().catch((error) => {
+      console.log("Błąd podczas odtwarzania:", error);
+    });
+  }
+
   info.innerText = "Przystanek:";
-  stop_name.style.color = "red";
   stop_name.innerText = data.current_stop;
 
   setTimeout(() => {
