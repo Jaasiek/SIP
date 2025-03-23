@@ -219,12 +219,6 @@ if (streets.length === 0) {
   }, 1000);
 }
 
-document.addEventListener("keyup", (event) => {
-  if (event.key === "Enter") {
-    load_line();
-  }
-});
-
 setInterval(() => {
   blue_board();
 }, 500);
