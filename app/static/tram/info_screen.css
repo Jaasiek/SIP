@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  font-family: "Roboto";
+  box-sizing: border-box;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+p {
+  margin: 0;
+}
+
+header {
+  display: flex;
+  height: 250px;
+  background-color: white;
+}
+
+div#blue_board {
+  display: none;
+  height: 260px;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  background-color: rgb(18, 0, 180);
+  color: white;
+  justify-content: space-between;
+  padding-right: 20px;
+}
+
+div#time {
+  font-size: 250px;
+  margin: 0;
+  margin-top: -20px;
+  margin-right: 20px;
+}
+
+div#date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  font-size: 75px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+div#stop_info {
+  padding: 10px;
+  display: flex;
+  height: 260px;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  justify-content: space-between;
+  font-size: 75px;
+}
+
+div#stop_name {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+div#line {
+  font-size: 250px;
+  margin: 0;
+  margin-top: -20px;
+  margin-right: 20px;
+}
+
+div#direction {
+  display: flex;
+  align-items: center;
+  margin-left: -20px;
+}
+
+div#right {
+  width: 100%;
+}
+
+.direction {
+  font-size: 100px;
+  margin: 0;
+}
+
+#route {
+  margin-top: 25px;
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  font-size: 75px;
+  width: 100%;
+}
+
+#route_marker {
+  background-color: white;
+  z-index: 999;
+  padding-right: 10px;
+}
+
+.scrolling-text {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 75px;
+  color: #333;
+  position: absolute;
+}

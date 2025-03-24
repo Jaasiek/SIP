@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Tram info screen</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+      const socket = io("http://127.0.0.1:5000");
+      socket.on("connect", () => {
+        console.log("WebSocket connected");
+      });
+      socket.on("disconnect", () => {
+        console.log("WebSocket disconnected");
+      });
+    </script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/tram/info_screen.css') }}"
+    />
+    <script
+      src="{{ url_for('static', filename='/tram/info_screen.js') }}"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div id="blue_board">
+      <div id="time"></div>
+      <div id="date">
+        <p id="day_of_the_week"></p>
+        <p id="other"></p>
+      </div>
+    </div>
+    <div id="stop_info">
+      <div id="information"></div>
+      <div id="stop_name"></div>
+    </div>
+
+    <header>
+      <div id="line"></div>
+
+      <div id="right">
+        <div id="direction">
+          <svg
+            width="100px"
+            height="100px"
+            viewBox="0 0 24.00 24.00"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke="#000000"
+            transform="matrix(1, 0, 0, 1, 0, 0)"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke="#000000"
+              stroke-width="0.048"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M5 12H19M19 12L13 6M19 12L13 18"
+                stroke="#000000"
+                stroke-width="2.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></path>
+            </g>
+          </svg>
+          <p class="direction"></p>
+        </div>
+        <div id="route"><b id="route_marker">TRASA:</b></div>
+      </div>
+    </header>
+    <main></main>
+  </body>
+</html>

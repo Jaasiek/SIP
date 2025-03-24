@@ -200,9 +200,9 @@ function current_stop(data) {
     console.log("No data yet");
     return;
   }
-  stop_name.style.color = "rgb(139, 9, 139)";
+  stop_name.style.color = "red";
   stop_name.style.fontWeight = "bold";
-  info.style.color = "rgb(139, 9, 139)";
+  info.style.color = "red";
 
   if (activeScreen === "time_board" && timeBoardTimeout) {
     clearTimeout(timeBoardTimeout);
