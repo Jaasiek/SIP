@@ -11,7 +11,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 stops = []
 stop_iterator = 0
-ANNOUNCEMENTS_FOLDER = "../data/announcements"
+ANNOUNCEMENTS_FOLDER = "data/announcements/"
 
 
 @app.route("/", methods=["GET"])
@@ -123,7 +123,7 @@ def next_stop_announcement(filename: str):
         filenames = [next_stop, filename]
 
     return Response(
-        stream_audio(filenames, "../../data/announcements"), mimetype="audio/mpeg"
+        stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
     )
 
 
@@ -141,7 +141,7 @@ def current_stop_announcement(filename):
         filenames = [filename]
 
     return Response(
-        stream_audio(filenames, "../../data/announcements"), mimetype="audio/mpeg"
+        stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
     )
 
 
