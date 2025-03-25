@@ -126,7 +126,7 @@ function startScrolling() {
   const screenWidth = window.innerWidth;
   const totalDistance = textWidth;
 
-  const speed = 500;
+  const speed = 250;
   const duration = (totalDistance / speed) * 1000;
 
   let startTime = null;
