@@ -38,7 +38,27 @@ function load_line(data) {
       streets = data.route.streets;
 
       if (streets.length > 0) {
-        line_div.innerText = data.line;
+        if (
+          data.line.startsWith("4") ||
+          data.line.startsWith("5") ||
+          data.line.startsWith("C") ||
+          data.line.startsWith("8") ||
+          data.line.startsWith("9")
+        ) {
+          line_div.style.color = "red";
+          line_div.innerText = data.line;
+        } else if (data.line.startsWith("7") || data.line.startsWith("Z")) {
+          line_div.style.color = "rgb(31, 167, 31)";
+          line_div.innerText = data.line;
+        } else if (data.line.startsWith("N")) {
+          line_div.style.color = "white";
+          line_div.style.background = "rgb(18, 18, 138)";
+          line_div.innerText = data.line;
+        } else {
+          line_div.style.color = "#333";
+          line_div.innerText = data.line;
+        }
+
         direction_div.innerText = data.route.direction;
         routeText.classList.add("scrolling-text");
         routeText.innerText = streets.join(" - ");

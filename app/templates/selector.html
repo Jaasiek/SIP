@@ -10,8 +10,8 @@
 
         const form = document.getElementById("form");
         const data = {
-          line: form.elements["line"].value,
-          variant: form.elements["variant"].value,
+          line: form.elements["line"].value.toUpperCase(),
+          variant: form.elements["variant"].value.toUpperCase(),
         };
 
         fetch("http://127.0.0.1:5000/route_post", {

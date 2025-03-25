@@ -47,3 +47,10 @@ def getting_route(line: str, variant: str = None):
         return {"stops": stops, "streets": streets, "direction": direction}
 
     return {"line": line, "variants": list(line_data.keys()), "success": True}
+
+
+# while True:
+#     line = input("Line: ").upper()
+#     variant = input("Variant: ").upper()
+
+#     print(getting_route(line, variant))
