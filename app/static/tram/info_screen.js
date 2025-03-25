@@ -106,7 +106,7 @@ function startScrolling() {
   const screenWidth = window.innerWidth;
   const totalDistance = textWidth;
 
-  const speed = 500;
+  const speed = 250;
   const duration = (totalDistance / speed) * 1000;
 
   let startTime = null;
@@ -156,9 +156,9 @@ function nextStop(data) {
   ) {
     previoust_stop = data.next_stop;
     previoust_stop_number = data.stop_number;
-    stop_name.style.color = "black";
+    stop_name.style.color = "#333";
     stop_name.style.fontWeight = "bold";
-    info.style.color = "black";
+    info.style.color = "#333";
 
     if (activeScreen === "time_board" && timeBoardTimeout) {
       clearTimeout(timeBoardTimeout);
