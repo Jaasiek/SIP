@@ -49,15 +49,12 @@ function variants() {
 
           // ➡️ Create direction and starting elements
           const directionP = document.createElement("p");
-          const nameP = document.createElement("p");
 
-          directionP.innerText = `Direction: ${variant.direction}`;
-          nameP.innerText = `Starting: ${variant.starting}`;
+          directionP.innerText = `${variant.starting} → ${variant.direction}`;
 
           // ➡️ Append elements in order
           variantSpan.appendChild(nameHeading);
           variantSpan.appendChild(directionP);
-          variantSpan.appendChild(nameP);
 
           // ➡️ Append to the main div
           variantsDiv.appendChild(variantSpan);

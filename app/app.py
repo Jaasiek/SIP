@@ -178,15 +178,21 @@ def last_stop_announcement(filename):
 
     last_stop = "last_stop.mp3"
     filenames = [filename, last_stop]
+    print(filenames)
 
     return Response(
-        stream_audio(filenames, "../../data/announcements"), mimetype="audio/mpeg"
+        stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
     )
 
 
 @app.get("/bus/info_screen")
 def bus_info_sceen():
     return render_template("/bus/info_screen.html")
+
+
+@app.get("/tram/info_screen")
+def tram_info_screen():
+    return render_template("/tram/info_screen.html")
 
 
 @app.get("/metro")
