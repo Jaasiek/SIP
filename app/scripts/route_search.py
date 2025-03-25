@@ -23,7 +23,7 @@ def getting_route(line: str, variant: str = None):
                     "direction": direction,
                 }
 
-        return {"line": line, "variants": variants, "success": True}
+        return {"line": line, "variants": variants}
 
     if variant != "0":
         result = line_data.get(variant)
@@ -56,7 +56,7 @@ def getting_route(line: str, variant: str = None):
 
         return {"stops": stops, "streets": streets, "direction": direction}
 
-    return {"line": line, "variants": list(line_data.keys()), "success": True}
+    return {"line": line, "variants": list(line_data.keys())}
 
 
 # while True:

@@ -13,6 +13,11 @@ stop_iterator = 0
 ANNOUNCEMENTS_FOLDER = "../data/announcements/"
 
 
+@app.get("/")
+def deafult_page():
+    return "add /driver in the URL"
+
+
 @app.get("/driver")
 def driver_get():
     return render_template("driver.html"), 200
@@ -31,7 +36,12 @@ def driver_post():
                 "success": True,
             },
         )
-        return jsonify({"success": True})
+        return jsonify(
+            {
+                "variants": variants,
+                "success": True,
+            }
+        )
     except KeyError:
         return jsonify({"success": False})
 
