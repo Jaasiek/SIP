@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Driver</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/driver/driver.css') }}"
+    />
+    <script
+      src="{{ url_for('static', filename='/driver/driver.js') }}"
+      defer
+    ></script>
+  </head>
+  <body>
+    <form onsubmit="post_line(event)" id="form">
+      <input type="text" name="line" placeholder="Line" required />
+      <input type="text" name="variant" placeholder="Variant" required />
+      <button type="submit">Select</button>
+    </form>
+    <button onclick="next_stop()">Next stop</button>
+    <button onclick="current_stop()">Current stop</button>
+  </body>
+</html>

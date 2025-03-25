@@ -12,7 +12,17 @@ def getting_route(line: str, variant: str = None):
         raise KeyError(f"No data found for line {line}")
 
     if variant == "SHOW":
-        variants = list(line_data.keys())
+        variants = {}
+        for variant_key, stops in line_data.items():
+            stops_list = list(stops.values())
+            if stops_list:
+                starting = stops_list[0]["nazwa_zespolu"]
+                direction = stops_list[-1]["nazwa_zespolu"]
+                variants[variant_key] = {
+                    "starting": starting,
+                    "direction": direction,
+                }
+
         return {"line": line, "variants": variants, "success": True}
 
     if variant != "0":
@@ -52,5 +62,8 @@ def getting_route(line: str, variant: str = None):
 # while True:
 #     line = input("Line: ").upper()
 #     variant = input("Variant: ").upper()
+
+#     if line == "Q":
+#         break
 
 #     print(getting_route(line, variant))

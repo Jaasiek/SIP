@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify, render_template, send_file, Response
 from flask_socketio import SocketIO
-import os
 from scripts.route_search import getting_route
 from scripts.sanitize_filename import sanitize_filename
 from scripts.announcements_stream import stream_audio
@@ -11,12 +10,30 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 stops = []
 stop_iterator = 0
-ANNOUNCEMENTS_FOLDER = "data/announcements/"
+ANNOUNCEMENTS_FOLDER = "../data/announcements/"
 
 
-@app.route("/", methods=["GET"])
-def home_page():
-    return render_template("selector.html")
+@app.get("/driver")
+def driver_get():
+    return render_template("driver.html"), 200
+
+
+@app.post("/driver")
+def driver_post():
+    data = request.get_json()
+    line = data.get("line")
+    try:
+        variants = getting_route(line, "SHOW")
+        socketio.emit(
+            "line_variants",
+            {
+                "variants": variants,
+                "success": True,
+            },
+        )
+        return jsonify({"success": True})
+    except KeyError:
+        return jsonify({"success": False})
 
 
 @app.post("/route_post")
