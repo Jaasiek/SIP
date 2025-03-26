@@ -59,7 +59,16 @@ function load_line(data) {
           line_div.innerText = data.line;
         }
 
-        direction_div.innerText = data.route.direction;
+        if (data.variant.startsWith("TX")) {
+          direction_div.innerText = `${data.route.direction} - kurs skrócony`;
+          direction_div.style.background = "red";
+          direction_div.style.color = "white";
+        } else {
+          direction_div.style.color = "#333";
+          direction_div.style.background = "white";
+          direction_div.innerText = data.route.direction;
+        }
+
         routeText.classList.add("scrolling-text");
         routeText.innerText = streets.join(" - ");
         routeDiv.appendChild(routeText);

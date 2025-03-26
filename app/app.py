@@ -62,6 +62,7 @@ def get_route():
                 "route": stops,
                 "line": line,
                 "streets": stops["streets"],
+                "variant": variant,
             },
         )
         return jsonify(

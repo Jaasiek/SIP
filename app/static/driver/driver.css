@@ -5,7 +5,7 @@ body {
 div#versions > span {
   display: flex;
   gap: 10px;
-  flex-direction: row-reverse;
-  justify-content: flex-end;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
 }

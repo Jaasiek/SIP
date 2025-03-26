@@ -11,10 +11,7 @@ function post_line(key) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+  });
 }
 
 function variants() {
@@ -78,12 +75,12 @@ function variants() {
           variantSpan.appendChild(selectButton);
 
           variantsDiv.appendChild(variantSpan);
+          console.log(`variant: ${key}`);
         });
       } else {
         variantsDiv.innerText = "No variants found.";
       }
-    })
-    .catch((error) => console.error("Error:", error));
+    });
 }
 
 function next_stop() {
@@ -96,10 +93,7 @@ function next_stop() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+  });
 }
 
 function current_stop() {
@@ -112,8 +106,5 @@ function current_stop() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  })
-    .then((response) => response.json())
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error));
+  });
 }

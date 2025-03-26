@@ -90,6 +90,7 @@ div#right {
 .direction {
   font-size: 100px;
   margin: 0;
+  padding: 0px 10px;
 }
 
 #route {
