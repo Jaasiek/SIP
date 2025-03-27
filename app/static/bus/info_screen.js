@@ -279,6 +279,12 @@ function current_stop(data) {
   info.innerText = "Przystanek:";
   stop_name.innerText = data.current_stop;
 
+  // Sprawdzenie i usunięcie pierwszego elementu listy, jeśli się nie zgadza
+  if (streets.length > 0 && streets[0] !== data.stop_street) {
+    streets.shift();
+    routeText.innerText = streets.join(" - ");
+  }
+
   setTimeout(() => {
     info.innerText = "";
     stop_name.innerText = "";

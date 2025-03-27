@@ -233,9 +233,9 @@ function current_stop(data) {
     console.log("No data yet");
     return;
   }
-  stop_name.style.color = "red";
+  stop_name.style.color = "rgb(139, 9, 139)";
   stop_name.style.fontWeight = "bold";
-  info.style.color = "red";
+  info.style.color = "rgb(139, 9, 139)";
 
   if (activeScreen === "time_board" && timeBoardTimeout) {
     clearTimeout(timeBoardTimeout);
@@ -247,7 +247,7 @@ function current_stop(data) {
 
   if (data.stop_type == "4") {
     const audio = new Audio(
-      `http:
+      `http://127.0.0.1:5000/last_stop_announcement/${encodeURIComponent(
         data.current_stop
       )}.mp3`
     );
@@ -257,7 +257,7 @@ function current_stop(data) {
     });
   } else {
     const audio = new Audio(
-      `http:
+      `http://127.0.0.1:5000/current_stop_announcement/${encodeURIComponent(
         data.current_stop
       )}.mp3`
     );
@@ -270,6 +270,12 @@ function current_stop(data) {
   info.innerText = "Przystanek:";
   stop_name.innerText = data.current_stop;
 
+  // Sprawdzenie i usunięcie pierwszego elementu listy, jeśli się nie zgadza
+  if (streets.length > 0 && streets[0] !== data.stop_street) {
+    streets.shift();
+    routeText.innerText = streets.join(" - ");
+  }
+
   setTimeout(() => {
     info.innerText = "";
     stop_name.innerText = "";
@@ -279,7 +285,6 @@ function current_stop(data) {
     startScrolling();
   }, 10000);
 }
-
 if (streets.length === 0) {
   setTimeout(() => {
     load_line();
