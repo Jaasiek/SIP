@@ -1,11 +1,100 @@
 body {
   margin: 20;
+  font-family: "Roboto";
+  background-color: rgb(19, 19, 58);
+  color: white;
+  overflow-y: hidden;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+input {
+  font-size: 50px;
+  max-width: 100px;
+  border: none;
+  background-color: #333;
+  color: white;
+  text-align: center;
+}
+
+input:focus {
+  outline: none;
+}
+
+div#versions {
+  max-height: calc(100vh - 220px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 div#versions > span {
   display: flex;
-  gap: 10px;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  gap: 10px;
+}
+
+div#versions > span > p {
+  width: 94%;
+  margin: 0;
+  background-color: #333;
+  padding: 0 10px;
+  border-radius: 10px;
+}
+
+div#versions > span > button {
+  border: none;
+  background-color: #333;
+  padding: 10px 10px;
+  border-radius: 10px;
+  height: 100%;
+  font-size: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
+}
+
+button#next_stop,
+button#current_stop,
+button#show_variants {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 40px;
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+button#next_stop:active,
+button#current_stop:active,
+div#versions > span > button:active,
+button#show_variants:active {
+  transform: scale(0.95);
+  transition: 0.2s;
+}
+
+button#next_stop:active {
+  color: red;
+}
+
+button#current_stop:active {
+  color: rgb(31, 167, 31);
+}
+
+div#buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
 }

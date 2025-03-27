@@ -14,9 +14,11 @@ function post_line(key) {
   });
 }
 
-function variants() {
+function variants(event) {
+  event.preventDefault();
   const form = document.getElementById("form");
   const variantsDiv = document.getElementById("versions");
+  const buttonsDiv = document.getElementById("buttons");
 
   const data = {
     line: form.elements["line"].value.toUpperCase(),
@@ -31,7 +33,7 @@ function variants() {
   })
     .then((response) => response.json())
     .then((data) => {
-      variantsDiv.innerHTML = "";
+      variantsDiv.innerHTML = ""; // Clear existing variants and buttons
 
       if (data.variants && data.variants.variants) {
         Object.entries(data.variants.variants).forEach(([key, variant]) => {
@@ -39,15 +41,15 @@ function variants() {
 
           const directionP = document.createElement("p");
           directionP.innerText = `${variant.starting} `;
+
           const svg = document.createElementNS(
             "http://www.w3.org/2000/svg",
             "svg"
           );
-          svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
           svg.setAttribute("height", "24px");
           svg.setAttribute("viewBox", "0 -960 960 960");
           svg.setAttribute("width", "24px");
-          svg.setAttribute("fill", "#000000");
+          svg.setAttribute("fill", "#FFFFFF");
 
           const path = document.createElementNS(
             "http://www.w3.org/2000/svg",
@@ -59,14 +61,12 @@ function variants() {
           );
 
           svg.appendChild(path);
-
           directionP.appendChild(svg);
           directionP.appendChild(
             document.createTextNode(` ${variant.direction}`)
           );
 
           const selectButton = document.createElement("button");
-
           selectButton.innerHTML =
             '<svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#75FB4C"><path d="M379.33-244 154-469.33 201.67-517l177.66 177.67 378.34-378.34L805.33-670l-426 426Z"/></svg>';
           selectButton.onclick = () => post_line(key);
@@ -75,12 +75,36 @@ function variants() {
           variantSpan.appendChild(selectButton);
 
           variantsDiv.appendChild(variantSpan);
-          console.log(`variant: ${key}`);
         });
+
+        // === Add Buttons After Variants ===
+        addStopButtons(buttonsDiv);
       } else {
         variantsDiv.innerText = "No variants found.";
       }
     });
+}
+
+function addStopButtons(container) {
+  // Remove existing buttons to prevent duplication
+  document.getElementById("next_stop")?.remove();
+  document.getElementById("current_stop")?.remove();
+
+  // Create 'Next Stop' button
+  const nextStopBtn = document.createElement("button");
+  nextStopBtn.id = "next_stop";
+  nextStopBtn.innerText = "Next stop";
+  nextStopBtn.onclick = next_stop;
+
+  // Create 'Current Stop' button
+  const currentStopBtn = document.createElement("button");
+  currentStopBtn.id = "current_stop";
+  currentStopBtn.innerText = "Current stop";
+  currentStopBtn.onclick = current_stop;
+
+  // Add buttons after the variants
+  container.appendChild(nextStopBtn);
+  container.appendChild(currentStopBtn);
 }
 
 function next_stop() {

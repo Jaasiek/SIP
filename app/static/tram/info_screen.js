@@ -43,7 +43,32 @@ function load_line(data) {
         routeText.classList.add("scrolling-text");
         routeText.innerText = streets.join(" - ");
         routeDiv.appendChild(routeText);
+        routeText.classList.add("scrolling-text");
 
+        if (data.variant.startsWith("TX")) {
+          direction_div.innerText = `${data.route.direction} - kurs skrócony`;
+          direction_div.style.background = "red";
+          direction_div.style.color = "white";
+
+          const lastStopSpan = document.createElement("span");
+          lastStopSpan.innerText = `Ostatni przystanek: ${data.route.direction}`;
+          lastStopSpan.style.background = "red";
+          lastStopSpan.style.color = "white";
+          lastStopSpan.style.padding = "2px 5px";
+          lastStopSpan.style.borderRadius = "5px";
+
+          routeText.innerText = streets.join(" - ");
+          routeText.appendChild(lastStopSpan);
+        } else {
+          direction_div.style.color = "#333";
+          direction_div.style.background = "white";
+          direction_div.innerText = data.route.direction;
+
+          routeText.innerText = streets.join(" - ");
+        }
+
+        routeDiv.appendChild(routeText);
+        routeDiv.appendChild(routeText);
         startScrolling();
       }
     } else {

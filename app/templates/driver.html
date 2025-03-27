@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Driver</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='/driver/driver.css') }}"
@@ -14,14 +20,14 @@
     ></script>
   </head>
   <body>
-    <form onsubmit="post_line(event)" id="form">
-      <input type="text" name="line" placeholder="Line" required />
-      <input type="text" name="variant" placeholder="Variant" required />
-      <button type="submit">Select</button>
-    </form>
-    <button onclick="next_stop()">Next stop</button>
-    <button onclick="current_stop()">Current stop</button>
-    <button onclick="variants()">Show all variants</button>
+    <header>
+      <form onsubmit="variants(event)" id="form">
+        <input type="text" name="line" placeholder="Line" required />
+        <button id="show_variants" type="submit">Show variants</button>
+      </form>
+    </header>
+
     <div id="versions"></div>
+    <div id="buttons"></div>
   </body>
 </html>

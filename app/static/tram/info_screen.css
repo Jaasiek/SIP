@@ -87,7 +87,6 @@ div#right {
 }
 
 #route {
-  margin-top: 25px;
   display: flex;
   overflow: hidden;
   white-space: nowrap;
