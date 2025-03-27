@@ -94,7 +94,6 @@ div#right {
 }
 
 #route {
-  margin-top: 25px;
   display: flex;
   overflow: hidden;
   white-space: nowrap;
@@ -112,7 +111,8 @@ div#right {
 .scrolling-text {
   display: inline-block;
   white-space: nowrap;
-  font-size: 75px;
   color: #333;
   position: absolute;
+  font-size: 75px;
+  padding-top: 25px;
 }

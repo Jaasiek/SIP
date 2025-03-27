@@ -57,8 +57,16 @@ function load_line(data) {
           lastStopSpan.style.padding = "2px 5px";
           lastStopSpan.style.borderRadius = "5px";
 
-          routeText.innerText = streets.join(" - ");
+          routeText.innerText = `${streets.join(" - ")} `;
           routeText.appendChild(lastStopSpan);
+        } else if (data.variant.startsWith("TZ")) {
+          const direction = data.route.direction;
+          const depotName = direction.split(" ").pop().toLowerCase();
+          direction_div.innerText = `Zjazd do zajezdni ${depotName}`;
+
+          direction_div.style.background = "red";
+          direction_div.style.color = "white";
+          routeText.innerText = `${streets.join(" - ")} `;
         } else {
           direction_div.style.color = "#333";
           direction_div.style.background = "white";
@@ -195,7 +203,7 @@ function nextStop(data) {
     header.style.display = "none";
 
     const audio = new Audio(
-      `http://127.0.0.1:5000/next_stop_announcement/${encodeURIComponent(
+      `http:
         data.next_stop
       )}.mp3`
     );
@@ -239,7 +247,7 @@ function current_stop(data) {
 
   if (data.stop_type == "4") {
     const audio = new Audio(
-      `http://127.0.0.1:5000/last_stop_announcement/${encodeURIComponent(
+      `http:
         data.current_stop
       )}.mp3`
     );
@@ -249,7 +257,7 @@ function current_stop(data) {
     });
   } else {
     const audio = new Audio(
-      `http://127.0.0.1:5000/current_stop_announcement/${encodeURIComponent(
+      `http:
         data.current_stop
       )}.mp3`
     );

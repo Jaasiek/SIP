@@ -14,11 +14,6 @@ ANNOUNCEMENTS_FOLDER = "../data/announcements/"
 
 
 @app.get("/")
-def deafult_page():
-    return "add /driver in the URL"
-
-
-@app.get("/driver")
 def driver_get():
     return render_template("driver.html"), 200
 
@@ -29,13 +24,6 @@ def driver_post():
     line = data.get("line")
     try:
         variants = getting_route(line, "SHOW")
-        socketio.emit(
-            "line_variants",
-            {
-                "variants": variants,
-                "success": True,
-            },
-        )
         return jsonify(
             {
                 "variants": variants,
