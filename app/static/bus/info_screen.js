@@ -73,7 +73,7 @@ function load_line(data) {
           lastStopSpan.style.padding = "2px 5px";
           lastStopSpan.style.borderRadius = "5px";
 
-          routeText.innerText = streets.join(" - ");
+          routeText.innerText = `${streets.join(" - ")} `;
           routeText.appendChild(lastStopSpan);
         } else {
           direction_div.style.color = "#333";

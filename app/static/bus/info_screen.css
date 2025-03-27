@@ -100,6 +100,7 @@ div#right {
   position: relative;
   font-size: 75px;
   width: 100%;
+  margin-top: 25px;
 }
 
 #route_marker {
@@ -113,6 +114,4 @@ div#right {
   white-space: nowrap;
   color: #333;
   position: absolute;
-  font-size: 75px;
-  padding-top: 25px;
 }
