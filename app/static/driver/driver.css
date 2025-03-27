@@ -27,7 +27,7 @@ input:focus {
 }
 
 div#versions {
-  max-height: calc(100vh - 220px);
+  height: calc(100vh - 220px);
   overflow-y: auto;
   overflow-x: hidden;
   font-size: 50px;
@@ -45,7 +45,7 @@ div#versions > span {
 }
 
 div#versions > span > p {
-  width: 94%;
+  width: 80%;
   margin: 0;
   background-color: #333;
   padding: 0 10px;
@@ -53,6 +53,7 @@ div#versions > span > p {
 }
 
 div#versions > span > button {
+  width: 20%;
   border: none;
   background-color: #333;
   padding: 10px 10px;

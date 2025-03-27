@@ -33,7 +33,7 @@ function variants(event) {
   })
     .then((response) => response.json())
     .then((data) => {
-      variantsDiv.innerHTML = ""; // Clear existing variants and buttons
+      variantsDiv.innerHTML = "";
 
       if (data.variants && data.variants.variants) {
         Object.entries(data.variants.variants).forEach(([key, variant]) => {
@@ -77,32 +77,27 @@ function variants(event) {
           variantsDiv.appendChild(variantSpan);
         });
 
-        // === Add Buttons After Variants ===
         addStopButtons(buttonsDiv);
       } else {
-        variantsDiv.innerText = "No variants found.";
+        variantsDiv.innerText = "Bad line";
       }
     });
 }
 
 function addStopButtons(container) {
-  // Remove existing buttons to prevent duplication
   document.getElementById("next_stop")?.remove();
   document.getElementById("current_stop")?.remove();
 
-  // Create 'Next Stop' button
   const nextStopBtn = document.createElement("button");
   nextStopBtn.id = "next_stop";
   nextStopBtn.innerText = "Next stop";
   nextStopBtn.onclick = next_stop;
 
-  // Create 'Current Stop' button
   const currentStopBtn = document.createElement("button");
   currentStopBtn.id = "current_stop";
   currentStopBtn.innerText = "Current stop";
   currentStopBtn.onclick = current_stop;
 
-  // Add buttons after the variants
   container.appendChild(nextStopBtn);
   container.appendChild(currentStopBtn);
 }
