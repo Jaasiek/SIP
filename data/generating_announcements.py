@@ -58,5 +58,10 @@ tts = gTTS("Przystanek końcowy, prosimy o opuszczenie pojazdu", lang="pl")
 tts.save("data/announcements/last_stop.mp3")
 tts = gTTS("Przystanek na żądanie", lang="pl")
 tts.save("data/announcements/on_request.mp3")
+tts = gTTS("Uwaga! Zjazd do zajezdni, ostatni przystanek na trasie:", lang="pl")
+tts.save("data/announcements/depot_return.mp3")
+tts = gTTS("Uwaga! Kurs skrócony, ostatni przystanek:", lang="pl")
+tts.save("data/announcements/shortened_course.mp3")
+
 
 print("✔ Zapowiedzi wygenerowane poprawnie!")
