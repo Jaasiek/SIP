@@ -95,10 +95,12 @@ div#right {
   height: 100%;
   display: flex;
   align-items: center;
+  font-weight: 700;
 }
 
 #route {
   display: flex;
+  align-items: center;
   overflow: hidden;
   white-space: nowrap;
   position: relative;
