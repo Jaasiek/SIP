@@ -226,6 +226,14 @@ function nextStop(data) {
     });
 
     info.innerText = "NASTĘPNY PRZYSTANEK:";
+
+    let count = 0;
+    const interval = setInterval(() => {
+      info.innerText = count % 2 === 0 ? "NEXT STOP:" : "NASTĘPNY PRZYSTANEK:";
+      count++;
+      if (count >= 4) clearInterval(interval);
+    }, 2000);
+
     stop_name.innerText = data.next_stop;
 
     setTimeout(() => {
@@ -281,6 +289,13 @@ function current_stop(data) {
   }
 
   info.innerText = "PRZYSTANEK:";
+
+  let count = 0;
+  const interval = setInterval(() => {
+    info.innerText = count % 2 === 0 ? "CURRENT STOP:" : "PRZYSTANEK:";
+    count++;
+    if (count >= 4) clearInterval(interval);
+  }, 2000);
   stop_name.innerText = data.current_stop;
 
   if (streets.length > 0 && streets[0] !== data.stop_street) {
