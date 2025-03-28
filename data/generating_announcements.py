@@ -40,15 +40,15 @@ for i, stop in enumerate(stops_list):
         try:
             tts = gTTS(f"{stop}", lang="pl")
             tts.save(file_path)
-            print(f"✔ Zapowiedź dla {stop} zapisana jako {file_path}")
+            print(f"-> Zapowiedź dla {stop} zapisana jako {file_path}")
 
             time.sleep(random.uniform(1, 3))
 
         except Exception as e:
-            print(f"❌ Błąd dla '{stop}': {e}")
+            print(f"Błąd dla '{stop}': {e}")
 
             if "429" in str(e):
-                print("🚨 Wykryto blokadę — czekanie 30 sekund...")
+                print("Google blokuje — czekanie 30 sekund")
                 time.sleep(30)
 
 
@@ -64,4 +64,4 @@ tts = gTTS("Uwaga! Kurs skrócony, ostatni przystanek:", lang="pl")
 tts.save("data/announcements/shortened_course.mp3")
 
 
-print("✔ Zapowiedzi wygenerowane poprawnie!")
+print("Zapowiedzi wygenerowane poprawnie!")
