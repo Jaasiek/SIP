@@ -225,7 +225,7 @@ function nextStop(data) {
       console.log("Błąd podczas odtwarzania:", error);
     });
 
-    info.innerText = "NASTĘPNY PRZYSTANEK";
+    info.innerText = "NASTĘPNY PRZYSTANEK:";
     stop_name.innerText = data.next_stop;
 
     setTimeout(() => {
@@ -295,7 +295,6 @@ function current_stop(data) {
 
       routeText.innerText = `TRASA: ${streets.join(" - ")} `;
       routeText.appendChild(lastStopSpan);
-      routeText.innerText = `TRASA: ${streets.join(" - ")}`;
     } else {
       routeText.innerText = `TRASA: ${streets.join(" - ")}`;
     }
