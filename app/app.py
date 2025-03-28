@@ -87,41 +87,45 @@ def route_get():
 @app.post("/next_stop")
 def next_stop_post():
     global stop_iterator, stop_name, stop_number, stop_street, stop_type
+    try:
+        stop_name = stops["stops"][stop_iterator]["name"]
+        stop_type = stops["stops"][stop_iterator]["type"]
+        stop_number = stops["stops"][stop_iterator]["stop_number"]
+        stop_street = stops["stops"][stop_iterator]["stop_street"]
+        stop_iterator += 1
+        if stop_type == "2":
+            stop_name = f"{stop_name} - NŻ"
 
-    stop_name = stops["stops"][stop_iterator]["name"]
-    stop_type = stops["stops"][stop_iterator]["type"]
-    stop_number = stops["stops"][stop_iterator]["stop_number"]
-    stop_street = stops["stops"][stop_iterator]["stop_street"]
-    stop_iterator += 1
-    if stop_type == "2":
-        stop_name = f"{stop_name} - NŻ"
-
-    socketio.emit(
-        "next_stop",
-        {
-            "next_stop": stop_name,
-            "stop_number": stop_number,
-            "success": True,
-        },
-    )
-    return jsonify({"success": True})
+        socketio.emit(
+            "next_stop",
+            {
+                "next_stop": stop_name,
+                "stop_number": stop_number,
+                "success": True,
+            },
+        )
+        return jsonify({"success": True})
+    except:
+        return jsonify({"success": False, "error": "List index out of range"})
 
 
 @app.post("/current_stop")
 def current_stop_post():
     global stop_name, stop_name, stop_street, stop_type
-
-    socketio.emit(
-        "current_stop",
-        {
-            "current_stop": stop_name,
-            "stop_number": stop_number,
-            "stop_street": stop_street,
-            "stop_type": stop_type,
-            "success": True,
-        },
-    )
-    return jsonify({"success": True})
+    try:
+        socketio.emit(
+            "current_stop",
+            {
+                "current_stop": stop_name,
+                "stop_number": stop_number,
+                "stop_street": stop_street,
+                "stop_type": stop_type,
+                "success": True,
+            },
+        )
+        return jsonify({"success": True})
+    except:
+        return jsonify({"success": False})
 
 
 @app.get("/next_stop_announcement/<string:filename>")
