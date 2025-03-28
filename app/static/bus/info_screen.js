@@ -5,6 +5,8 @@ let scrollingPaused = false;
 let activeScreen = null;
 let loaded = false;
 let timeBoardTimeout = null;
+let shortened_course = false;
+let direction = null;
 
 const routeDiv = document.querySelector("#route");
 const routeText = document.createElement("span");
@@ -62,6 +64,8 @@ function load_line(data) {
         routeText.classList.add("scrolling-text");
 
         if (data.variant.startsWith("TX")) {
+          shortened_course = true;
+          direction = data.route.direction;
           direction_div.innerText = `${data.route.direction} - kurs skrócony`;
           direction_div.style.background = "red";
           direction_div.style.color = "white";
@@ -73,14 +77,14 @@ function load_line(data) {
           lastStopSpan.style.padding = "2px 5px";
           lastStopSpan.style.borderRadius = "5px";
 
-          routeText.innerText = `${streets.join(" - ")} `;
+          routeText.innerText = `TRASA: ${streets.join(" - ")} `;
           routeText.appendChild(lastStopSpan);
         } else {
           direction_div.style.color = "#333";
           direction_div.style.background = "white";
           direction_div.innerText = data.route.direction;
 
-          routeText.innerText = streets.join(" - ");
+          routeText.innerText = `TRASA: ${streets.join(" - ")}`;
         }
 
         routeDiv.appendChild(routeText);
@@ -281,7 +285,20 @@ function current_stop(data) {
 
   if (streets.length > 0 && streets[0] !== data.stop_street) {
     streets.shift();
-    routeText.innerText = streets.join(" - ");
+    if (shortened_course) {
+      const lastStopSpan = document.createElement("span");
+      lastStopSpan.innerText = `Ostatni przystanek: ${direction}`;
+      lastStopSpan.style.background = "red";
+      lastStopSpan.style.color = "white";
+      lastStopSpan.style.padding = "2px 5px";
+      lastStopSpan.style.borderRadius = "5px";
+
+      routeText.innerText = `TRASA: ${streets.join(" - ")} `;
+      routeText.appendChild(lastStopSpan);
+      routeText.innerText = `TRASA: ${streets.join(" - ")}`;
+    } else {
+      routeText.innerText = `TRASA: ${streets.join(" - ")}`;
+    }
   }
 
   setTimeout(() => {

@@ -41,7 +41,6 @@ function load_line(data) {
         line_div.innerText = data.line;
         direction_div.innerText = data.route.direction;
         routeText.classList.add("scrolling-text");
-        routeText.innerText = streets.join(" - ");
         routeDiv.appendChild(routeText);
         routeText.classList.add("scrolling-text");
 
@@ -57,7 +56,7 @@ function load_line(data) {
           lastStopSpan.style.padding = "2px 5px";
           lastStopSpan.style.borderRadius = "5px";
 
-          routeText.innerText = `${streets.join(" - ")} `;
+          routeText.innerText = `TRASA: ${streets.join(" - ")} `;
           routeText.appendChild(lastStopSpan);
         } else if (data.variant.startsWith("TZ")) {
           const direction = data.route.direction;
@@ -66,13 +65,13 @@ function load_line(data) {
 
           direction_div.style.background = "red";
           direction_div.style.color = "white";
-          routeText.innerText = `${streets.join(" - ")} `;
+          routeText.innerText = `TRASA: ${streets.join(" - ")} `;
         } else {
           direction_div.style.color = "#333";
           direction_div.style.background = "white";
           direction_div.innerText = data.route.direction;
 
-          routeText.innerText = streets.join(" - ");
+          routeText.innerText = `TRASA: ${streets.join(" - ")}`;
         }
 
         routeDiv.appendChild(routeText);
@@ -272,7 +271,7 @@ function current_stop(data) {
 
   if (streets.length > 0 && streets[0] !== data.stop_street) {
     streets.shift();
-    routeText.innerText = streets.join(" - ");
+    routeText.innerText = `TRASA: ${streets.join(" - ")}`;
   }
 
   setTimeout(() => {
