@@ -211,7 +211,7 @@ function nextStop(data) {
       console.log("Błąd podczas odtwarzania:", error);
     });
 
-    info.innerText = "Następny przystanek:";
+    info.innerText = "NASTĘPNY PRZYSTANEK";
     stop_name.innerText = data.next_stop;
 
     setTimeout(() => {
@@ -266,7 +266,7 @@ function current_stop(data) {
     });
   }
 
-  info.innerText = "Przystanek:";
+  info.innerText = "PRZYSTANEK:";
   stop_name.innerText = data.current_stop;
 
   if (streets.length > 0 && streets[0] !== data.stop_street) {
