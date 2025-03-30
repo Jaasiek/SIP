@@ -227,7 +227,7 @@ function nextStop(data) {
           console.log("Błąd podczas odtwarzania:", error);
         });
       }
-    }, 3000);
+    }, 10000);
 
     info.innerText = "NASTĘPNY PRZYSTANEK:";
 
