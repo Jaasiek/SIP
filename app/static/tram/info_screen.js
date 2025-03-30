@@ -258,7 +258,7 @@ function current_stop(data) {
 
   if (data.stop_type == "4") {
     const audio = new Audio(
-      `http://127.0.0.1:5000/last_stop_announcement/${encodeURIComponent(
+      `http://192.168.0.23:5000/last_stop_announcement/${encodeURIComponent(
         data.current_stop
       )}.mp3`
     );
@@ -268,7 +268,7 @@ function current_stop(data) {
     });
   } else {
     const audio = new Audio(
-      `http://127.0.0.1:5000/current_stop_announcement/${encodeURIComponent(
+      `http://192.168.0.23:5000/current_stop_announcement/${encodeURIComponent(
         data.current_stop
       )}.mp3`
     );
