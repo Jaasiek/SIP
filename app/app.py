@@ -182,7 +182,7 @@ def shortened_course_annoncement(filename):
     filename = sanitize_filename(filename)
 
     shortened_course = "shortened_course.mp3"
-    filenames = [filename, shortened_course]
+    filenames = [shortened_course, filename]
 
     return Response(
         stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
