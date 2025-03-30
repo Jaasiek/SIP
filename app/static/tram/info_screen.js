@@ -215,8 +215,8 @@ function nextStop(data) {
       console.log("Błąd podczas odtwarzania:", error);
     });
 
-    setTimeout(() => {
-      if (streets.length <= 100) {
+    if (streets.length <= 100) {
+      setTimeout(() => {
         const shortened_course_audio = new Audio(
           `http://192.168.0.23:5000/shortened_course/${encodeURIComponent(
             direction
@@ -226,9 +226,8 @@ function nextStop(data) {
         shortened_course_audio.play().catch((error) => {
           console.log("Błąd podczas odtwarzania:", error);
         });
-      }
-    }, 10000);
-
+      }, 10000);
+    }
     info.innerText = "NASTĘPNY PRZYSTANEK:";
 
     let count = 0;
