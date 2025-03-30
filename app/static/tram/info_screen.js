@@ -215,7 +215,7 @@ function nextStop(data) {
       console.log("Błąd podczas odtwarzania:", error);
     });
 
-    if (streets.length <= 100) {
+    if (streets.length <= 4) {
       setTimeout(() => {
         const shortened_course_audio = new Audio(
           `http://192.168.0.23:5000/shortened_course/${encodeURIComponent(
