@@ -171,7 +171,18 @@ def last_stop_announcement(filename):
 
     last_stop = "last_stop.mp3"
     filenames = [filename, last_stop]
-    print(filenames)
+
+    return Response(
+        stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
+    )
+
+
+@app.get("/shortened_course/<string:filename>")
+def shortened_course_annoncement(filename):
+    filename = sanitize_filename(filename)
+
+    shortened_course = "shortened_course.mp3"
+    filenames = [filename, shortened_course]
 
     return Response(
         stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"

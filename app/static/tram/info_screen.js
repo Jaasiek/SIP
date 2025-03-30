@@ -215,6 +215,18 @@ function nextStop(data) {
       console.log("Błąd podczas odtwarzania:", error);
     });
 
+    if (streets.length <= 100) {
+      const shortened_course_audio = new Audio(
+        `http://192.168.0.23:5000/shortened_course/${encodeURIComponent(
+          direction
+        )}.mp3`
+      );
+
+      shortened_course_audio.play().catch((error) => {
+        console.log("Błąd podczas odtwarzania:", error);
+      });
+    }
+
     info.innerText = "NASTĘPNY PRZYSTANEK:";
 
     let count = 0;
