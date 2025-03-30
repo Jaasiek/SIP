@@ -206,7 +206,7 @@ function nextStop(data) {
     header.style.display = "none";
 
     const audio = new Audio(
-      `http:
+      `http://192.168.0.23:5000/next_stop_announcement/${encodeURIComponent(
         data.next_stop
       )}.mp3`
     );

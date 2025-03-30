@@ -225,17 +225,19 @@ function nextStop(data) {
       console.log("Błąd podczas odtwarzania:", error);
     });
 
-    if (streets.length <= 3) {
-      const shortened_course_audio = new Audio(
-        `http://192.168.0.23:5000/shortened_course/${encodeURIComponent(
-          direction
-        )}.mp3`
-      );
+    setTimeout(() => {
+      if (streets.length <= 100) {
+        const shortened_course_audio = new Audio(
+          `http://192.168.0.23:5000/shortened_course/${encodeURIComponent(
+            direction
+          )}.mp3`
+        );
 
-      shortened_course_audio.play().catch((error) => {
-        console.log("Błąd podczas odtwarzania:", error);
-      });
-    }
+        shortened_course_audio.play().catch((error) => {
+          console.log("Błąd podczas odtwarzania:", error);
+        });
+      }
+    }, 3000);
 
     info.innerText = "NASTĘPNY PRZYSTANEK:";
 
