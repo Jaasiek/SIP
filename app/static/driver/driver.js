@@ -119,7 +119,7 @@ function current_stop() {
   const data = {
     current_stop: true,
   };
-  fetch("http://192.168.0.23:5000/current_stop", {
+  fetch("http://192.168.0.91:5000/current_stop", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
