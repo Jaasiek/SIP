@@ -106,7 +106,7 @@ function next_stop() {
   const data = {
     next_stop: true,
   };
-  fetch("http://192.168.0.23:5000/next_stop", {
+  fetch("http://19192.168.0.23:5000xt_stop", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
