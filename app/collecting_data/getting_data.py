@@ -3,9 +3,9 @@ from sorting_data import sorting_data
 from stops_with_names import naming_stops
 
 routes_path = "data/routes/public_transport_routes.json"
-stops_path = "data/routes/public_transport_stops.json"
+stops_path = "data/routes/public_transport_routes.json"
 stops_info_path = "data/routes/public_transport_stops_info.json"
-final_path = "data/routes/stops.json"
+final_path = "data/routes/routes.json"
 
 
 def public_transport_routes_get(path) -> None:

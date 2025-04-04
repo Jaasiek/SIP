@@ -1,6 +1,6 @@
 import json
 
-final_path = "../data/routes/stops.json"
+final_path = "../data/routes/routes.json"
 
 
 def getting_route(line: str, variant: str = None):

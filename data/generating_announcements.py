@@ -26,7 +26,7 @@ def unique_stops(stops_path):
     return list(nazwa_zespolu_list)
 
 
-stops_list = unique_stops("data/routes/public_transport_stops.json")
+stops_list = unique_stops("data/routes/public_transport_routes.json")
 
 
 os.makedirs("data/announcements", exist_ok=True)
