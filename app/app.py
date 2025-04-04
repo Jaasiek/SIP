@@ -18,6 +18,31 @@ def driver_get():
     return render_template("driver.html"), 200
 
 
+@app.get("/bus/info_screen")
+def bus_info_sceen():
+    return render_template("/bus/info_screen.html")
+
+
+@app.get("/tram/info_screen")
+def tram_info_screen():
+    return render_template("/tram/info_screen.html")
+
+
+@app.get("/metro")
+def metro_screen():
+    return render_template("/metro/metro.html")
+
+
+@app.get("/bus/koral")
+def bus_koral():
+    return render_template("/bus/koral.html")
+
+
+@app.get("/tram/koral")
+def tram_koral():
+    return render_template("/tram/koral.html")
+
+
 @app.post("/driver")
 def driver_post():
     data = request.get_json()
@@ -189,22 +214,5 @@ def shortened_course_annoncement(filename):
     )
 
 
-@app.get("/bus/info_screen")
-def bus_info_sceen():
-    return render_template("/bus/info_screen.html")
-
-
-@app.get("/tram/info_screen")
-def tram_info_screen():
-    return render_template("/tram/info_screen.html")
-
-
-@app.get("/metro")
-def metro_screen():
-    return render_template("/metro/metro.html")
-
-
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000, debug=True, allow_unsafe_werkzeug=True)
-    # Uncomment this to make it visible for other devices in your local network
-    # socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
