@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, send_file, Response
+from flask import Flask, request, jsonify, render_template, Response
 from flask_socketio import SocketIO
 from scripts.route_search import getting_route
 from scripts.sanitize_filename import sanitize_filename

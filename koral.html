@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Bus koral</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <!-- <script>
+      const socket = io("http://192.168.88.199:5000");
+      socket.on("connect", () => {
+        console.log("WebSocket connected");
+      });
+      socket.on("disconnect", () => {
+        console.log("WebSocket disconnected");
+      });
+    </script> -->
+    <link rel="stylesheet" href="/koral.css" />
+    <!-- <script
+      src="{{ url_for('static', filename='/bus/koral.js') }}"
+      defer
+    ></script> -->
+  </head>
+  <body>
+    <section id="left">
+      <header>
+        <div id="vehicle_type">bus</div>
+        <div id="line_box">
+          <p id="line">217</p>
+          <p id="line_type">linia zwykła</p>
+        </div>
+      </header>
+      <main id="desc">
+        <div class="wtp">
+          <div id="logo">
+            <img src="/data/icons/wtp.svg" alt="error occurred" />
+          </div>
+          <p>Warszawski Transport Publiczny</p>
+        </div>
+        <div class="contact">
+          <div class="info">
+            <div id="logo">
+              <img src="/data/icons/info.svg" alt="info icon" />
+            </div>
+            <p>www.wtp.waw.pl</p>
+          </div>
+          <div class="phone">
+            <div id="logo">
+              <img src="/data/icons/phone.svg" alt="telephone icon" />
+            </div>
+
+            <p>19 115</p>
+          </div>
+        </div>
+      </main>
+      <main id="info">
+        <p>INFORMACJE</p>
+        <div>
+          <span
+            >Od soboty <b>22 marca</b> remontujemy torowisko tramwajowe na
+            wiadukcie w al. Jana Pawła II przy Arkadii
+            <p>Linie <b>16, 17, 22, 24, 27, 33</b> zmienią swoje trasy.</p>
+            <p>Linia <b>28</b> nie będzie kursować.</p>
+            <span>Uruchomione zostaną linie:</span>
+            <p>-tramwajowe: <b>71, 73, 78</b></p>
+            <p>-autobusowe: <b>Z17 i Z33.</b></p></span
+          >
+        </div>
+      </main>
+      <footer>
+        <p id="time">10:00</p>
+        <p id="day_of_the_week">pt.</p>
+        <p id="date">11.04.2025</p>
+      </footer>
+    </section>
+  </body>
+</html>
