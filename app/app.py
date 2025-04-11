@@ -88,27 +88,6 @@ def get_route():
         return jsonify({"success": False})
 
 
-@app.get("/route_get")
-def route_get():
-    global stop_iterator
-    stop_iterator = 0
-    try:
-        return jsonify(
-            {
-                "route": stops,
-                "line": line,
-                "success": True,
-            }
-        )
-    except:
-        return jsonify(
-            {
-                "message": "No data yet",
-                "success": False,
-            }
-        )
-
-
 @app.post("/next_stop")
 def next_stop_post():
     global stop_iterator, stop_name, stop_number, stop_street, stop_type

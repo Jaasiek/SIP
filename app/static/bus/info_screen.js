@@ -216,7 +216,7 @@ function nextStop(data) {
     header.style.display = "none";
 
     const audio = new Audio(
-      `http://192.168.0.23:5000/next_stop_announcement/${encodeURIComponent(
+      `http://192.168.0.91:5000/next_stop_announcement/${encodeURIComponent(
         data.next_stop
       )}.mp3`
     );
@@ -228,7 +228,7 @@ function nextStop(data) {
     if (shortened_course && streets.length <= 100) {
       setTimeout(() => {
         const shortened_course_audio = new Audio(
-          `http://192.168.0.23:5000/shortened_course/${encodeURIComponent(
+          `http://192.168.0.91:5000/shortened_course/${encodeURIComponent(
             direction
           )}.mp3`
         );
@@ -282,7 +282,7 @@ function current_stop(data) {
 
   if (data.stop_type == "4") {
     const audio = new Audio(
-      `http://192.168.0.23:5000/last_stop_announcement/${encodeURIComponent(
+      `http://192.168.0.91:5000/last_stop_announcement/${encodeURIComponent(
         data.current_stop
       )}.mp3`
     );
