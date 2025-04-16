@@ -49,7 +49,7 @@ function load_line(data) {
         if (data.variant.startsWith("TX")) {
           shortened_course = true;
           direction = data.route.direction;
-          direction_div.innerText = `${data.route.direction} - kurs skrócony`;
+          direction_div.innerText = `${data.route.direction}`;
           direction_div.style.background = "red";
           direction_div.style.color = "white";
 
@@ -60,7 +60,7 @@ function load_line(data) {
           lastStopSpan.style.padding = "2px 5px";
           lastStopSpan.style.borderRadius = "5px";
 
-          routeText.innerText = `TRASA: ${streets.join(" - ")} `;
+          routeText.innerText = `TRASA SKRÓCONA: ${streets.join(" - ")} `;
           routeText.appendChild(lastStopSpan);
         } else if (data.variant.startsWith("TZ")) {
           const direction = data.route.direction;
@@ -78,7 +78,6 @@ function load_line(data) {
           routeText.innerText = `TRASA: ${streets.join(" - ")}`;
         }
 
-        routeDiv.appendChild(routeText);
         routeDiv.appendChild(routeText);
         startScrolling();
       }
@@ -206,7 +205,7 @@ function nextStop(data) {
     header.style.display = "none";
 
     const audio = new Audio(
-      `http://192.168.88.199:5000/next_stop_announcement/${encodeURIComponent(
+      `http://192.168.0.91:5000/next_stop_announcement/${encodeURIComponent(
         data.next_stop
       )}.mp3`
     );
@@ -215,10 +214,10 @@ function nextStop(data) {
       console.log("Błąd podczas odtwarzania:", error);
     });
 
-    if (shortened_course && streets.length <= 100) {
+    if (shortened_course && streets.length <= 10) {
       setTimeout(() => {
         const shortened_course_audio = new Audio(
-          `http://192.168.88.199:5000/shortened_course/${encodeURIComponent(
+          `http://192.168.0.91:5000/shortened_course/${encodeURIComponent(
             direction
           )}.mp3`
         );
@@ -271,7 +270,7 @@ function current_stop(data) {
 
   if (data.stop_type == "4") {
     const audio = new Audio(
-      `http://192.168.88.199:5000/last_stop_announcement/${encodeURIComponent(
+      `http://192.168.0.91:5000/last_stop_announcement/${encodeURIComponent(
         data.current_stop
       )}.mp3`
     );
@@ -281,7 +280,7 @@ function current_stop(data) {
     });
   } else {
     const audio = new Audio(
-      `http://192.168.88.199:5000/current_stop_announcement/${encodeURIComponent(
+      `http://192.168.0.91:5000/current_stop_announcement/${encodeURIComponent(
         data.current_stop
       )}.mp3`
     );
@@ -326,11 +325,6 @@ function current_stop(data) {
     activeScreen = null;
     startScrolling();
   }, 10000);
-}
-if (streets.length === 0) {
-  setTimeout(() => {
-    load_line();
-  }, 1000);
 }
 
 setInterval(() => {

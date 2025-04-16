@@ -11,20 +11,23 @@
     />
     <title>Bus koral</title>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-    <!-- <script>
-      const socket = io("http://192.168.88.199:5000");
+    <script>
+      const socket = io("http://192.168.0.91:5000");
       socket.on("connect", () => {
         console.log("WebSocket connected");
       });
       socket.on("disconnect", () => {
         console.log("WebSocket disconnected");
       });
-    </script> -->
-    <link rel="stylesheet" href="/koral.css" />
-    <!-- <script
+    </script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='/bus/koral.css') }}"
+    />
+    <script
       src="{{ url_for('static', filename='/bus/koral.js') }}"
       defer
-    ></script> -->
+    ></script>
   </head>
   <body>
     <section id="left">
@@ -38,20 +41,29 @@
       <main id="desc">
         <div class="wtp">
           <div id="logo">
-            <img src="/data/icons/wtp.svg" alt="error occurred" />
+            <img
+              src="{{ url_for('static', filename='/bus/icons/wtp.svg') }}"
+              alt="error occurred"
+            />
           </div>
           <p>Warszawski Transport Publiczny</p>
         </div>
         <div class="contact">
           <div class="info">
             <div id="logo">
-              <img src="/data/icons/info.svg" alt="info icon" />
+              <img
+                src="{{ url_for('static', filename='/bus/icons/info.svg') }}"
+                alt="info icon"
+              />
             </div>
             <p>www.wtp.waw.pl</p>
           </div>
           <div class="phone">
             <div id="logo">
-              <img src="/data/icons/phone.svg" alt="telephone icon" />
+              <img
+                src="{{ url_for('static', filename='/bus/icons/phone.svg') }}"
+                alt="telephone icon"
+              />
             </div>
 
             <p>19 115</p>

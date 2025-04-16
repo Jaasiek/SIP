@@ -12,7 +12,7 @@
     <title>Bus koral</title>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script>
-      const socket = io("http://192.168.88.199:5000");
+      const socket = io("http://192.168.0.91:5000");
       socket.on("connect", () => {
         console.log("WebSocket connected");
       });
@@ -29,5 +29,66 @@
       defer
     ></script>
   </head>
-  <body></body>
+  <body>
+    <section id="left">
+      <header>
+        <div id="vehicle_type">bus</div>
+        <div id="line_box">
+          <p id="line"></p>
+          <p id="line_type"></p>
+        </div>
+      </header>
+      <main id="desc">
+        <div class="wtp">
+          <div id="logo">
+            <img
+              src="{{ url_for('static', filename='/bus/icons/wtp.svg') }}"
+              alt="error occurred"
+            />
+          </div>
+          <p>Warszawski Transport Publiczny</p>
+        </div>
+        <div class="contact">
+          <div class="info">
+            <div id="logo">
+              <img
+                src="{{ url_for('static', filename='/bus/icons/info.svg') }}"
+                alt="info icon"
+              />
+            </div>
+            <p>www.wtp.waw.pl</p>
+          </div>
+          <div class="phone">
+            <div id="logo">
+              <img
+                src="{{ url_for('static', filename='/bus/icons/phone.svg') }}"
+                alt="telephone icon"
+              />
+            </div>
+
+            <p>19 115</p>
+          </div>
+        </div>
+      </main>
+      <main id="info">
+        <p>INFORMACJE</p>
+        <div>
+          <span
+            >Od soboty <b>22 marca</b> remontujemy torowisko tramwajowe na
+            wiadukcie w al. Jana Pawła II przy Arkadii
+            <p>Linie <b>16, 17, 22, 24, 27, 33</b> zmienią swoje trasy.</p>
+            <p>Linia <b>28</b> nie będzie kursować.</p>
+            <span>Uruchomione zostaną linie:</span>
+            <p>-tramwajowe: <b>71, 73, 78</b></p>
+            <p>-autobusowe: <b>Z17 i Z33.</b></p></span
+          >
+        </div>
+      </main>
+      <footer>
+        <p id="time"></p>
+        <p id="day_of_the_week"></p>
+        <p id="date"></p>
+      </footer>
+    </section>
+  </body>
 </html>
