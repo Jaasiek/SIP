@@ -12,7 +12,7 @@
     <title>Bus koral</title>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script>
-      const socket = io("http://192.168.0.91:5000");
+      const socket = io("http://172.20.10.3:5000");
       socket.on("connect", () => {
         console.log("WebSocket connected");
       });
@@ -89,6 +89,22 @@
         <p id="day_of_the_week"></p>
         <p id="date"></p>
       </footer>
+    </section>
+    <section id="right">
+      <header>
+        <span>
+          <div id="info">Następny przystanek:</div>
+          <div id="stop_name">Metro Imielin</div>
+        </span>
+        <hr />
+      </header>
+      <main>
+        <div id="stops"></div>
+        <div class="progress-bar">
+          <div class="progress-fill"></div>
+        </div>
+      </main>
+      <footer></footer>
     </section>
   </body>
 </html>
