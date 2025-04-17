@@ -57,28 +57,32 @@ function load_line(data) {
 
   console.log(data.route.stops);
 
-  stops = data.route.stops;
+  stops = data.route.stops.reverse();
 
-  stops.forEach((stop) => {
-    if (stop.type == "2") {
-      divStopsContent += `
-        <div class="stop-wrapper">
-            <span class="rotated-stop">
-                <img src="/static/bus/icons/stop_on_request.svg" />
-                <p>${stop.name}</p>
-            </span>
-        </div>`;
-    } else {
-      divStopsContent += `
-        <div class="stop-wrapper">
-            <span class="rotated-stop">
-                <img src="/static/bus/icons/stop.svg" alt="stop" />
-                <p>${stop.name}</p>
-            </span>
-        </div>`;
-    }
+  stops_div.innerHTML = "";
+
+  stops.forEach((stop, index) => {
+    const positionPercent =
+      stops.length === 1 ? 50 : (index / (stops.length - 1)) * 100;
+
+    const stopElement = document.createElement("div");
+    stopElement.className = "stop-wrapper";
+    stopElement.style.left = `${positionPercent}%`;
+
+    const imgSrc =
+      stop.type === "2"
+        ? "/static/bus/icons/stop_on_request.svg"
+        : "/static/bus/icons/stop.svg";
+
+    stopElement.innerHTML = `
+    <span class="rotated-stop">
+      <img src="${imgSrc}" />
+      <p>${stop.name}</p>
+    </span>
+  `;
+
+    stops_div.appendChild(stopElement);
   });
-  stops_div.innerHTML = divStopsContent;
 }
 
 function time_load() {
