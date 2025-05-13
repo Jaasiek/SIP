@@ -1,4 +1,5 @@
 let divStopsContent = "";
+let previoust_stop = "";
 
 socket.on("update_route", (data) => {
   loaded = true;
@@ -73,6 +74,7 @@ function LoadLine(data) {
   announcement_span.style.color = "rgb(139, 9, 139)";
   info_stop_div.innerText = "Przystanek: ";
   stop_name_div.innerText = stops[0].name;
+  previoust_stop = stops[0].name;
 
   stops_div.innerHTML = "";
 
@@ -81,7 +83,6 @@ function LoadLine(data) {
       stops.length === 1 ? 50 : (index / (stops.length - 1)) * 100;
 
     const stopElement = document.createElement("div");
-    // stopElement.className = "stop-wrapper";
     stopElement.style.left = `${positionPercent}%`;
 
     const imgSrc =
@@ -104,12 +105,18 @@ function NextStop(data) {
   announcement_span.style.color = "black";
   info_stop_div.innerText = "Następny przystanek: ";
   stop_name_div.innerText = data.next_stop;
+
+  if (previoust_stop !== "") {
+    document.querySelector(`#${previoust_stop}`).classList.add("disabled");
+    console.log(previoust_stop);
+  }
 }
 
 function CurrentStop(data) {
   announcement_span.style.color = "rgb(139, 9, 139)";
   info_stop_div.innerText = "Przystanek: ";
   stop_name_div.innerText = data.current_stop;
+  previoust_stop = data.current_stop;
 }
 
 function TimeLoad() {
