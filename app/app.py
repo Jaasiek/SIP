@@ -98,7 +98,7 @@ def next_stop_post():
         stop_street = stops["stops"][stop_iterator]["stop_street"]
         stop_iterator += 1
         if stop_type == "2":
-            stop_name = f"{stop_name} - NŻ"
+            stop_name = f"{stop_name} - NA ŻĄDANIE (ON REQUEST)"
 
         socketio.emit(
             "next_stop",

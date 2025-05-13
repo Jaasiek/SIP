@@ -219,7 +219,7 @@ section#right > header > hr {
   align-items: center;
 } */
 
-#right > main {
+#right > main #stops {
   transform: rotate(-90deg);
 }
 
@@ -228,9 +228,18 @@ section#right > header > hr {
   align-items: center;
   gap: 10px;
   font-size: 30px;
+  width: 100%;
 }
 
-#stops > div:first-child span p,
+/* #stops > div {
+  width: max-content;
+} */
+
+#stops > div:first-child span p {
+  font-size: 50px;
+  color: "rgb(139, 9, 139)";
+}
+
 #stops > div:last-child span p {
   font-size: 50px;
 }
@@ -260,21 +269,25 @@ section#right > header > hr {
   white-space: nowrap;
   margin: 0;
 }
-
-.progress-bar {
+*/
+.progress {
   width: 100%;
-  height: 30px;
-  background-color: lightgray;
-  border-radius: 40px;
-  transform: rotate(180deg);
+  display: flex;
+  flex-direction: row-reverse;
 }
 
+.progress-bar {
+  background-color: lightgray;
+  border-radius: 40px;
+  width: 100%;
+  height: 30px;
+}
 .progress-fill {
   height: 100%;
   background-color: rgb(139, 9, 139);
   border-radius: 40px;
-  width: 100%;
-} */
+  width: 80%;
+}
 
 .disabled {
   opacity: 15%;

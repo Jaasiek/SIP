@@ -67,8 +67,6 @@ function LoadLine(data) {
     line_type.innerText = "linia ekspresowa";
   }
 
-  console.log(data.route.stops);
-
   stops = data.route.stops;
 
   announcement_span.style.color = "rgb(139, 9, 139)";
@@ -90,8 +88,10 @@ function LoadLine(data) {
         ? "/static/bus/icons/stop_on_request.svg"
         : "/static/bus/icons/stop.svg";
 
+    let stop_name = stop.name.replace(/[\s\-."']+/g, "");
+
     stopElement.innerHTML = `
-    <span class="rotated-stop" id="${stop.name}">
+    <span class="rotated-stop" id="${stop_name}${stop.stop_number}">
       <img src="${imgSrc}" />
       <p>${stop.name}</p>
     </span>
@@ -103,12 +103,18 @@ function LoadLine(data) {
 
 function NextStop(data) {
   announcement_span.style.color = "black";
+  if (previoust_stop != "") {
+    document.querySelector(
+      `#${previoust_stop.replace(/[\s\-."']+/g, "")}`
+    ).style.color = "black";
+  }
   info_stop_div.innerText = "Następny przystanek: ";
   stop_name_div.innerText = data.next_stop;
 
   if (previoust_stop !== "") {
-    document.querySelector(`#${previoust_stop}`).classList.add("disabled");
-    console.log(previoust_stop);
+    document
+      .querySelector(`#${previoust_stop.replace(/[\s\-."']+/g, "")}`)
+      .classList.add("disabled");
   }
 }
 
@@ -116,7 +122,19 @@ function CurrentStop(data) {
   announcement_span.style.color = "rgb(139, 9, 139)";
   info_stop_div.innerText = "Przystanek: ";
   stop_name_div.innerText = data.current_stop;
-  previoust_stop = data.current_stop;
+
+  if (data.current_stop.endsWith("NA ŻĄDANIE (ON REQUEST)")) {
+    const name = data.current_stop.replace("- NA ŻĄDANIE (ON REQUEST)", " ");
+    document.querySelector(
+      `#${name.replace(/[\s\-."']+/g, "")}${data.stop_number}`
+    ).style.color = "rgb(139, 9, 139)";
+    previoust_stop = `${name}${data.stop_number}`;
+  } else {
+    previoust_stop = `${data.current_stop}${data.stop_number}`;
+    document.querySelector(
+      `#${data.current_stop.replace(/[\s\-."']+/g, "")}${data.stop_number}`
+    ).style.color = "rgb(139, 9, 139)";
+  }
 }
 
 function TimeLoad() {
