@@ -12,7 +12,7 @@
     <title>Bus koral</title>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script>
-      const socket = io("http://192.168.0.91:5000");
+      const socket = io("http://192.168.88.199:5000");
       socket.on("connect", () => {
         console.log("WebSocket connected");
       });
@@ -72,17 +72,7 @@
       </main>
       <main id="info">
         <p>INFORMACJE</p>
-        <div>
-          <span
-            >Od soboty <b>22 marca</b> remontujemy torowisko tramwajowe na
-            wiadukcie w al. Jana Pawła II przy Arkadii
-            <p>Linie <b>16, 17, 22, 24, 27, 33</b> zmienią swoje trasy.</p>
-            <p>Linia <b>28</b> nie będzie kursować.</p>
-            <span>Uruchomione zostaną linie:</span>
-            <p>-tramwajowe: <b>71, 73, 78</b></p>
-            <p>-autobusowe: <b>Z17 i Z33.</b></p></span
-          >
-        </div>
+        <div></div>
       </main>
       <footer>
         <p id="time"></p>
@@ -92,9 +82,9 @@
     </section>
     <section id="right">
       <header>
-        <span>
-          <div id="info">Przystanek:</div>
-          <div id="stop_name">Natolin Płn.</div>
+        <span id="announcement">
+          <div id="info_stop">Przystanek:</div>
+          <div id="stop_name"></div>
         </span>
         <hr />
       </header>
