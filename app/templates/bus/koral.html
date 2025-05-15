@@ -12,7 +12,7 @@
     <title>Bus koral</title>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script>
-      const socket = io("http://192.168.88.199:5000");
+      const socket = io("http://192.168.88.105:5000");
       socket.on("connect", () => {
         console.log("WebSocket connected");
       });
@@ -83,7 +83,7 @@
     <section id="right">
       <header>
         <span id="announcement">
-          <div id="info_stop">Przystanek:</div>
+          <div id="info_stop"></div>
           <div id="stop_name"></div>
         </span>
         <hr />
