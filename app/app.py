@@ -139,9 +139,10 @@ def next_stop_announcement(filename: str):
     next_stop = "next_stop.mp3"
     on_request = "on_request.mp3"
 
-    if filename.endswith(" - NŻ.mp3"):
-        filename = filename.replace(" - NŻ.mp3", "")
+    if filename.endswith(" - NA ŻĄDANIE (ON REQUEST).mp3"):
+        filename = filename.replace(" - NA ŻĄDANIE (ON REQUEST).mp3", "")
         filename = f"{filename}.mp3"
+        print(filename)
         filenames = [next_stop, filename, on_request]
     else:
         filenames = [next_stop, filename]
@@ -157,9 +158,10 @@ def current_stop_announcement(filename):
 
     on_request = "on_request.mp3"
 
-    if filename.endswith(" - NŻ.mp3"):
-        filename = filename.replace(" - NŻ.mp3", "")
+    if filename.endswith(" - NA ŻĄDANIE (ON REQUEST).mp3"):
+        filename = filename.replace(" - NA ŻĄDANIE (ON REQUEST).mp3", "")
         filename = f"{filename}.mp3"
+        print(filename)
         filenames = [filename, on_request]
     else:
         filenames = [filename]
