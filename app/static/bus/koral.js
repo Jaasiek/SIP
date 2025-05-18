@@ -95,10 +95,11 @@ function LoadLine(data) {
     let stop_name = sanitizeStopName(stop.name);
 
     stopElement.innerHTML = `
-    <span class="rotated-stop" id="${stop_name}${stop.stop_number}">
+    <span class="rotated-stop">
       <img src="${imgSrc}" />
       <p>${stop.name}</p>
     </span>
+    </div>
   `;
 
     stops_div.appendChild(stopElement);
@@ -160,7 +161,7 @@ function TimeLoad() {
   time.innerText = `${addZero(hours)}:${addZero(minutes)}`;
   day_of_the_week.innerText = `${weekdays[day]}`;
   date.innerText = `${addZero(day_of_the_month.toString())}.${addZero(
-    month.toString()
+    (month + 1).toString()
   )}.${year.toString()}`;
 }
 
