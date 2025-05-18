@@ -5,7 +5,7 @@ function post_line(key) {
     variant: key.toUpperCase(),
   };
 
-  fetch("http://192.168.0.91:5000/route_post", {
+  fetch("http://192.168.88.105:5000/route_post", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -24,7 +24,7 @@ function variants(event) {
     line: form.elements["line"].value.toUpperCase(),
   };
 
-  fetch("http://192.168.0.91:5000/driver", {
+  fetch("http://192.168.88.105:5000/driver", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -96,7 +96,7 @@ function addStopButtons(container) {
   const currentStopBtn = document.createElement("button");
   currentStopBtn.id = "current_stop";
   currentStopBtn.innerText = "Current stop";
-  currentStopBtn.onclick = current_stop;
+  currentStopBtn.onclick = CurrentStop;
 
   container.appendChild(nextStopBtn);
   container.appendChild(currentStopBtn);
@@ -106,7 +106,7 @@ function next_stop() {
   const data = {
     next_stop: true,
   };
-  fetch("http://192.168.0.91:5000/next_stop", {
+  fetch("http://192.168.88.105:5000/next_stop", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -115,11 +115,11 @@ function next_stop() {
   });
 }
 
-function current_stop() {
+function CurrentStop() {
   const data = {
     current_stop: true,
   };
-  fetch("http://192.168.0.91:5000/current_stop", {
+  fetch("http://192.168.88.105:5000/current_stop", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

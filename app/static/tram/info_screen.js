@@ -22,19 +22,19 @@ const time_board = document.querySelector("#blue_board");
 const stop = document.querySelector("#stop_info");
 
 socket.on("next_stop", (data) => {
-  nextStop(data);
+  NextStop(data);
 });
 
 socket.on("current_stop", (data) => {
-  current_stop(data);
+  CurrentStop(data);
 });
 
 socket.on("update_route", (data) => {
   loaded = true;
-  load_line(data);
+  LoadLine(data);
 });
 
-function load_line(data) {
+function LoadLine(data) {
   if (loaded) {
     if (data.success == true) {
       streets = data.route.streets;
@@ -79,7 +79,7 @@ function load_line(data) {
         }
 
         routeDiv.appendChild(routeText);
-        startScrolling();
+        StartScrolling();
       }
     } else {
       console.log("No data yet");
@@ -87,7 +87,7 @@ function load_line(data) {
   }
 }
 
-function blue_board() {
+function BlueBoard() {
   const months = [
     "stycznia",
     "lutego",
@@ -133,7 +133,7 @@ function blue_board() {
   } ${year.toString()}`;
 }
 
-function startScrolling() {
+function StartScrolling() {
   if (scrollingPaused || activeScreen !== null) return;
   activeScreen = "time_board";
 
@@ -170,7 +170,7 @@ function startScrolling() {
           time_board.style.display = "none";
           header.style.display = "flex";
           activeScreen = null;
-          startScrolling();
+          StartScrolling();
         }
       }, 5000);
     }
@@ -179,7 +179,7 @@ function startScrolling() {
   requestAnimationFrame(scroll);
 }
 
-function nextStop(data) {
+function NextStop(data) {
   if (!data.success) {
     console.log("No data yet");
     return;
@@ -205,7 +205,7 @@ function nextStop(data) {
     header.style.display = "none";
 
     const audio = new Audio(
-      `http://192.168.0.91:5000/next_stop_announcement/${encodeURIComponent(
+      `http://192.168.88.105:5000/next_stop_announcement/${encodeURIComponent(
         data.next_stop
       )}.mp3`
     );
@@ -217,7 +217,7 @@ function nextStop(data) {
     if (shortened_course && streets.length <= 10) {
       setTimeout(() => {
         const shortened_course_audio = new Audio(
-          `http://192.168.0.91:5000/shortened_course/${encodeURIComponent(
+          `http://192.168.88.105:5000/shortened_course/${encodeURIComponent(
             direction
           )}.mp3`
         );
@@ -245,13 +245,13 @@ function nextStop(data) {
         scrollingPaused = false;
         header.style.display = "flex";
         activeScreen = null;
-        startScrolling();
+        StartScrolling();
       }
     }, 10000);
   }
 }
 
-function current_stop(data) {
+function CurrentStop(data) {
   if (!data.success) {
     console.log("No data yet");
     return;
@@ -270,7 +270,7 @@ function current_stop(data) {
 
   if (data.stop_type == "4") {
     const audio = new Audio(
-      `http://192.168.0.91:5000/last_stop_announcement/${encodeURIComponent(
+      `http://192.168.88.105:5000/last_stop_announcement/${encodeURIComponent(
         data.current_stop
       )}.mp3`
     );
@@ -280,7 +280,7 @@ function current_stop(data) {
     });
   } else {
     const audio = new Audio(
-      `http://192.168.0.91:5000/current_stop_announcement/${encodeURIComponent(
+      `http://192.168.88.105:5000/current_stop_announcement/${encodeURIComponent(
         data.current_stop
       )}.mp3`
     );
@@ -323,10 +323,10 @@ function current_stop(data) {
     scrollingPaused = false;
     header.style.display = "flex";
     activeScreen = null;
-    startScrolling();
+    StartScrolling();
   }, 10000);
 }
 
 setInterval(() => {
-  blue_board();
+  BlueBoard();
 }, 500);

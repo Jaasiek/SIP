@@ -139,7 +139,7 @@ main#desc > .contact > .phone > p {
 }
 
 main#info {
-  display: flex;
+  display: none;
   flex-direction: column;
   height: 100%;
   width: 70%;
@@ -185,8 +185,11 @@ section#right {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 100%;
+  height: 1050px;
+  width: 100%;
+}
+
+section#right > main {
   width: 100%;
 }
 
@@ -206,6 +209,10 @@ section#right > header > span {
   gap: 10px;
 }
 
+section#right > header > span > #stop_name {
+  font-weight: bold;
+}
+
 section#right > header > hr {
   width: 100%;
   margin: 0;
@@ -216,7 +223,7 @@ section#right > header > hr {
 
 #stops {
   position: relative;
-  top: 140px;
+  top: 140px; /* przesuwa przystanki nad progress-bar */
   left: -70px;
   width: 100%;
   height: 0;
@@ -230,28 +237,46 @@ section#right > main {
 
 .stop-wrapper {
   position: absolute;
-  transform: translateX(-50%);
-  bottom: 0;
-  text-align: center;
+  height: 100%;
+  left: 33%;
+  top: 0;
 }
 
 .rotated-stop {
-  transform: rotate(130deg);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-}
-.rotated-stop img {
-  width: 40px;
-  height: 40px;
-  background-color: white;
-  border-radius: 100%;
+  font-size: 30px;
+  width: 100%;
 }
 
-.rotated-stop p {
-  font-size: 30px;
-  white-space: nowrap;
-  margin: 0;
+/* #stops > div {
+  width: max-content;
+} */
+
+#stops > div:first-child span p {
+  font-size: 50px;
+  color: "rgb(139, 9, 139)";
+}
+
+#stops > div:last-child span p {
+  font-size: 50px;
+}
+
+#stops {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 9999;
+}
+
+.progress {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .stop {
@@ -266,29 +291,16 @@ section#right > main {
 }
 
 .progress-bar {
-  margin-left: 20px;
-  position: relative;
-  width: 85%;
-  height: 30px;
   background-color: lightgray;
   border-radius: 40px;
-  transform: rotate(180deg);
-  overflow: visible;
+  width: 100%;
+  height: 30px;
 }
-
 .progress-fill {
   height: 100%;
   background-color: rgb(139, 9, 139);
   border-radius: 40px;
-  width: 100%;
-}
-
-#districts {
-  margin-left: 20px;
-  margin-top: 20px;
-  width: 85%;
-  height: 50px;
-  background-color: rgb(139, 32, 64);
+  width: 70%;
 }
 
 .disabled {

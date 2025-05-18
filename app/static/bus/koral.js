@@ -1,8 +1,17 @@
 let divStopsContent = "";
+let previoust_stop = "";
 
 socket.on("update_route", (data) => {
   loaded = true;
-  load_line(data);
+  LoadLine(data);
+});
+
+socket.on("next_stop", (data) => {
+  NextStop(data);
+});
+
+socket.on("current_stop", (data) => {
+  CurrentStop(data);
 });
 
 const line_div = document.querySelector("#line");
@@ -11,53 +20,63 @@ const time = document.querySelector("#time");
 const day_of_the_week = document.querySelector("#day_of_the_week");
 const date = document.querySelector("#date");
 const stops_div = document.querySelector("#stops");
+const stop_name_div = document.querySelector("#stop_name");
+const info_stop_div = document.querySelector("#info_stop");
+const announcement_span = document.querySelector("#announcement");
 
-function load_line(data) {
+function sanitizeStopName(stopName) {
+  return stopName.replace(/[\s\-."'()]+/g, "");
+}
+
+function LoadLine(data) {
   divStopsContent = "";
   line_div.style.background = "none";
   line_div.style.color = "#333";
 
   if (data.line.startsWith("1") || data.line.startsWith("2")) {
     line_div.innerText = data.line;
-    line_type.innerText = "Linia zwykła";
+    line_type.innerText = "linia zwykła";
   } else if (data.line.startsWith("3")) {
     line_div.style.color = "red";
     line_div.innerText = data.line;
-    line_type.innerText = "Linia okresowa";
+    line_type.innerText = "linia okresowa";
   } else if (data.line.startsWith("4")) {
     line_div.style.color = "red";
     line_div.innerText = data.line;
-    line_type.innerText = "Linia przyspieszona okresowa";
+    line_type.innerText = "linia przyspieszona okresowa";
   } else if (data.line.startsWith("5")) {
     line_div.style.color = "red";
     line_div.innerText = data.line;
-    line_type.innerText = "Linia przyspieszona";
+    line_type.innerText = "linia przyspieszona";
   } else if (data.line.startsWith("7")) {
     line_div.style.color = "rgb(31, 167, 31)";
     line_div.innerText = data.line;
-    line_type.innerText = "Linia strefowa";
+    line_type.innerText = "linia strefowa";
   } else if (data.line.startsWith("8")) {
     line_div.style.color = "rgb(31, 167, 31)";
     line_div.innerText = data.line;
-    line_type.innerText = "Linia strefowa okresowa";
+    line_type.innerText = "linia strefowa okresowa";
   } else if (data.line.startsWith("9")) {
     line_div.style.color = "red";
     line_div.innerText = data.line;
-    line_type.innerText = "Linia specjalna";
+    line_type.innerText = "linia specjalna";
   } else if (data.line.startsWith("N")) {
     line_div.style.color = "white";
     line_div.style.background = "rgb(18, 18, 138)";
     line_div.innerText = data.line;
-    line_type.innerText = "Linia nocna";
+    line_type.innerText = "linia nocna";
   } else if (data.line.startsWith("E")) {
     line_div.style.color = "red";
     line_div.innerText = data.line;
-    line_type.innerText = "Linia ekspresowa";
+    line_type.innerText = "linia ekspresowa";
   }
 
-  console.log(data.route.stops);
+  stops = data.route.stops;
 
-  stops = data.route.stops.reverse();
+  announcement_span.style.color = "rgb(139, 9, 139)";
+  info_stop_div.innerText = "Przystanek: ";
+  stop_name_div.innerText = stops[0].name;
+  previoust_stop = stops[0].name;
 
   stops_div.innerHTML = "";
 
@@ -66,7 +85,6 @@ function load_line(data) {
       stops.length === 1 ? 50 : (index / (stops.length - 1)) * 100;
 
     const stopElement = document.createElement("div");
-    stopElement.className = "stop-wrapper";
     stopElement.style.left = `${positionPercent}%`;
 
     const imgSrc =
@@ -74,9 +92,9 @@ function load_line(data) {
         ? "/static/bus/icons/stop_on_request.svg"
         : "/static/bus/icons/stop.svg";
 
+    let stop_name = sanitizeStopName(stop.name);
+
     stopElement.innerHTML = `
-    <div class="stop">
-    <p class="time">0'</p>
     <span class="rotated-stop">
       <img src="${imgSrc}" />
       <p>${stop.name}</p>
@@ -88,7 +106,42 @@ function load_line(data) {
   });
 }
 
-function time_load() {
+function NextStop(data) {
+  announcement_span.style.color = "black";
+  if (previoust_stop != "") {
+    document.querySelector(`#${sanitizeStopName(previoust_stop)}`).style.color =
+      "black";
+  }
+  info_stop_div.innerText = "Następny przystanek: ";
+  stop_name_div.innerText = data.next_stop;
+
+  if (previoust_stop !== "") {
+    document
+      .querySelector(`#${sanitizeStopName(previoust_stop)}`)
+      .classList.add("disabled");
+  }
+}
+
+function CurrentStop(data) {
+  announcement_span.style.color = "rgb(139, 9, 139)";
+  info_stop_div.innerText = "Przystanek: ";
+  stop_name_div.innerText = data.current_stop;
+
+  if (data.current_stop.endsWith("NA ŻĄDANIE (ON REQUEST)")) {
+    const name = data.current_stop.replace("- NA ŻĄDANIE (ON REQUEST)", " ");
+    document.querySelector(
+      `#${sanitizeStopName(name)}${data.stop_number}`
+    ).style.color = "rgb(139, 9, 139)";
+    previoust_stop = `${name}${data.stop_number}`;
+  } else {
+    previoust_stop = `${data.current_stop}${data.stop_number}`;
+    document.querySelector(
+      `#${sanitizeStopName(data.current_stop)}${data.stop_number}`
+    ).style.color = "rgb(139, 9, 139)";
+  }
+}
+
+function TimeLoad() {
   const weekdays = ["ndz.", "pon.", "wt.", "śr.", "czw.", "pt.", "sob."];
   const date_creator = new Date();
   function addZero(i) {
@@ -113,5 +166,5 @@ function time_load() {
 }
 
 setInterval(() => {
-  time_load();
+  TimeLoad();
 }, 1000);
