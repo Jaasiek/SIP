@@ -15,7 +15,7 @@ p {
 }
 
 section#left {
-  width: min-content;
+  width: 600px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -31,10 +31,10 @@ section#left > header {
 }
 
 section#left > header div#vehicle_type {
-  height: 250px;
-  width: 250px;
+  height: 200px;
+  width: 200px;
   display: flex;
-  font-size: 125px;
+  font-size: 100px;
   align-items: center;
   justify-content: center;
   background-color: rgb(139, 9, 139);
@@ -48,13 +48,13 @@ section#left > header div#line_box {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 250px;
-  width: 500px;
+  height: 200px;
+  width: 400px;
 }
 
 section#left > header > div#line_box p#line {
   height: 75%;
-  font-size: 200px;
+  font-size: 175px;
   font-weight: bold;
   display: flex;
   align-items: center;
@@ -70,7 +70,7 @@ section#left > header > div#line_box p#line_type {
   background-color: rgb(139, 9, 139);
   width: 100%;
   height: 25%;
-  font-size: 50px;
+  font-size: 40px;
 }
 
 main#desc > .wtp {
@@ -89,7 +89,7 @@ main#desc > .wtp p {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 30px;
   width: 100%;
 }
 
@@ -102,8 +102,9 @@ main#desc > .contact {
 
 main#desc > .contact > .info {
   display: flex;
+  align-items: center;
   background-color: rgb(211, 211, 211);
-  width: 75%;
+  width: 70%;
 }
 
 main#desc > .contact > .info > p {
@@ -113,15 +114,16 @@ main#desc > .contact > .info > p {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
   width: 100%;
 }
 
 main#desc > .contact > .phone {
   display: flex;
+  align-items: center;
   background-color: rgb(211, 211, 211);
-  width: 25%;
+  width: 30%;
 }
 
 main#desc > .contact > .phone > p {
@@ -131,7 +133,7 @@ main#desc > .contact > .phone > p {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
   width: 100%;
 }
@@ -140,14 +142,14 @@ main#info {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 75%;
+  width: 70%;
 }
 
 main#info > p {
   background-color: rgb(218, 218, 39);
   padding-left: 10px;
   box-sizing: border-box;
-  font-size: 40px;
+  font-size: 35px;
   width: 100%;
 }
 
@@ -169,10 +171,10 @@ section#left > footer {
   color: white;
   display: flex;
   gap: 10px;
-  font-size: 50px;
+  font-size: 35px;
   font-weight: bold;
   height: 75px;
-  width: 75%;
+  width: 70%;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
@@ -214,7 +216,7 @@ section#right > header > hr {
 
 #stops {
   position: relative;
-  top: 140px; /* przesuwa przystanki nad progress-bar */
+  top: 140px;
   left: -70px;
   width: 100%;
   height: 0;
@@ -252,6 +254,17 @@ section#right > main {
   margin: 0;
 }
 
+.stop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stop > p.time {
+  font-size: 30px;
+  transform: rotate(180deg);
+}
+
 .progress-bar {
   margin-left: 20px;
   position: relative;
@@ -267,7 +280,15 @@ section#right > main {
   height: 100%;
   background-color: rgb(139, 9, 139);
   border-radius: 40px;
-  width: 70%;
+  width: 100%;
+}
+
+#districts {
+  margin-left: 20px;
+  margin-top: 20px;
+  width: 85%;
+  height: 50px;
+  background-color: rgb(139, 32, 64);
 }
 
 .disabled {

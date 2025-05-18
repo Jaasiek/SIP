@@ -75,10 +75,13 @@ function load_line(data) {
         : "/static/bus/icons/stop.svg";
 
     stopElement.innerHTML = `
+    <div class="stop">
+    <p class="time">0'</p>
     <span class="rotated-stop">
       <img src="${imgSrc}" />
       <p>${stop.name}</p>
     </span>
+    </div>
   `;
 
     stops_div.appendChild(stopElement);
@@ -105,7 +108,7 @@ function time_load() {
   time.innerText = `${addZero(hours)}:${addZero(minutes)}`;
   day_of_the_week.innerText = `${weekdays[day]}`;
   date.innerText = `${addZero(day_of_the_month.toString())}.${addZero(
-    month.toString()
+    (month + 1).toString()
   )}.${year.toString()}`;
 }
 
