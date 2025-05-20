@@ -68,7 +68,8 @@ div#versions > span > button {
 
 button#next_stop,
 button#current_stop,
-button#show_variants {
+button#show_variants,
+button#check_out {
   background-color: #333;
   color: white;
   border: none;

@@ -1,5 +1,13 @@
+socket.on("update_route", (data) => {
+  loaded = true;
+  LoadLine(data);
+});
+
+const buttonsDiv = document.querySelector("#buttons");
+const form = document.getElementById("form");
+const variantsDiv = document.getElementById("versions");
+
 function post_line(key) {
-  const form = document.getElementById("form");
   const data = {
     line: form.elements["line"].value.toUpperCase(),
     variant: key.toUpperCase(),
@@ -16,9 +24,6 @@ function post_line(key) {
 
 function variants(event) {
   event.preventDefault();
-  const form = document.getElementById("form");
-  const variantsDiv = document.getElementById("versions");
-  const buttonsDiv = document.getElementById("buttons");
 
   const data = {
     line: form.elements["line"].value.toUpperCase(),
@@ -76,8 +81,6 @@ function variants(event) {
 
           variantsDiv.appendChild(variantSpan);
         });
-
-        addStopButtons(buttonsDiv);
       } else {
         variantsDiv.innerText = "Bad line";
       }
@@ -87,11 +90,17 @@ function variants(event) {
 function addStopButtons(container) {
   document.getElementById("next_stop")?.remove();
   document.getElementById("current_stop")?.remove();
+  document.getElementById("check_out")?.remove();
 
   const nextStopBtn = document.createElement("button");
   nextStopBtn.id = "next_stop";
   nextStopBtn.innerText = "Next stop";
-  nextStopBtn.onclick = next_stop;
+  nextStopBtn.onclick = nextStop;
+
+  const checkOutBtn = document.createElement("button");
+  checkOutBtn.id = "check_out";
+  checkOutBtn.innerText = "Check OUT";
+  checkOutBtn.onclick = checkOut;
 
   const currentStopBtn = document.createElement("button");
   currentStopBtn.id = "current_stop";
@@ -99,10 +108,11 @@ function addStopButtons(container) {
   currentStopBtn.onclick = CurrentStop;
 
   container.appendChild(nextStopBtn);
+  container.appendChild(checkOutBtn);
   container.appendChild(currentStopBtn);
 }
 
-function next_stop() {
+function nextStop() {
   const data = {
     next_stop: true,
   };
@@ -126,4 +136,18 @@ function CurrentStop() {
     },
     body: JSON.stringify(data),
   });
+}
+
+function checkOut() {
+  const variantsDiv = document.getElementById("versions");
+  variantsDiv.style.display = "flex";
+  buttonsDiv.style.display = "none";
+}
+
+function LoadLine(data) {
+  const variantsDiv = document.getElementById("versions");
+  variantsDiv.style.display = "none";
+  addStopButtons(buttonsDiv);
+  buttonsDiv.style.display = "flex";
+  console.log(data);
 }
