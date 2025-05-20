@@ -20,27 +20,27 @@ def driver_get():
 
 @app.get("/bus/info_screen")
 def bus_info_sceen():
-    return render_template("/bus/info_screen.html")
+    return render_template("/bus/info_screen.html"), 200
 
 
 @app.get("/tram/info_screen")
 def tram_info_screen():
-    return render_template("/tram/info_screen.html")
+    return render_template("/tram/info_screen.html"), 200
 
 
 @app.get("/metro")
 def metro_screen():
-    return render_template("/metro/metro.html")
+    return render_template("/metro/metro.html"), 200
 
 
 @app.get("/bus/koral")
 def bus_koral():
-    return render_template("/bus/koral.html")
+    return render_template("/bus/koral.html"), 200
 
 
 @app.get("/tram/koral")
 def tram_koral():
-    return render_template("/tram/koral.html")
+    return render_template("/tram/koral.html"), 200
 
 
 @app.post("/driver")
@@ -49,14 +49,17 @@ def driver_post():
     line = data.get("line")
     try:
         variants = getting_route(line, "SHOW")
-        return jsonify(
-            {
-                "variants": variants,
-                "success": True,
-            }
+        return (
+            jsonify(
+                {
+                    "variants": variants,
+                    "success": True,
+                }
+            ),
+            201,
         )
     except KeyError:
-        return jsonify({"success": False})
+        return jsonify({"success": False}), 400
 
 
 @app.post("/route_post")
@@ -78,14 +81,17 @@ def get_route():
                 "variant": variant,
             },
         )
-        return jsonify(
-            {
-                "success": True,
-            }
+        return (
+            jsonify(
+                {
+                    "success": True,
+                }
+            ),
+            200,
         )
     except KeyError:
         stops = []
-        return jsonify({"success": False})
+        return jsonify({"success": False}), 400
 
 
 @app.post("/next_stop")
@@ -108,9 +114,9 @@ def next_stop_post():
                 "success": True,
             },
         )
-        return jsonify({"success": True})
+        return jsonify({"success": True}), 202
     except:
-        return jsonify({"success": False, "error": "List index out of range"})
+        return jsonify({"success": False, "error": "List index out of range"}), 404
 
 
 @app.post("/current_stop")
@@ -127,9 +133,9 @@ def current_stop_post():
                 "success": True,
             },
         )
-        return jsonify({"success": True})
+        return jsonify({"success": True}), 202
     except:
-        return jsonify({"success": False})
+        return jsonify({"success": False}), 404
 
 
 @app.get("/next_stop_announcement/<string:filename>")
@@ -147,8 +153,11 @@ def next_stop_announcement(filename: str):
     else:
         filenames = [next_stop, filename]
 
-    return Response(
-        stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
+    return (
+        Response(
+            stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
+        ),
+        200,
     )
 
 
@@ -166,8 +175,11 @@ def current_stop_announcement(filename):
     else:
         filenames = [filename]
 
-    return Response(
-        stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
+    return (
+        Response(
+            stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
+        ),
+        200,
     )
 
 
@@ -178,8 +190,11 @@ def last_stop_announcement(filename):
     last_stop = "last_stop.mp3"
     filenames = [filename, last_stop]
 
-    return Response(
-        stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
+    return (
+        Response(
+            stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
+        ),
+        200,
     )
 
 
@@ -190,8 +205,11 @@ def shortened_course_annoncement(filename):
     shortened_course = "shortened_course.mp3"
     filenames = [shortened_course, filename]
 
-    return Response(
-        stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
+    return (
+        Response(
+            stream_audio(filenames, "../data/announcements"), mimetype="audio/mpeg"
+        ),
+        200,
     )
 
 
