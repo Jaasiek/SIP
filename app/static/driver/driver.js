@@ -1,11 +1,15 @@
 socket.on("update_route", (data) => {
   loaded = true;
   LoadLine(data);
+  console.log(data);
 });
 
 const buttonsDiv = document.querySelector("#buttons");
 const form = document.getElementById("form");
 const variantsDiv = document.getElementById("versions");
+const lineDataDiv = document.getElementById("line_data");
+const lineDiv = document.getElementById("line");
+const directionDiv = document.getElementById("direction");
 
 function post_line(key) {
   const data = {
@@ -13,7 +17,7 @@ function post_line(key) {
     variant: key.toUpperCase(),
   };
 
-  fetch("http://192.168.0.91:5000/route_post", {
+  fetch("http://192.168.88.187:5000/route_post", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -29,7 +33,7 @@ function variants(event) {
     line: form.elements["line"].value.toUpperCase(),
   };
 
-  fetch("http://192.168.0.91:5000/driver", {
+  fetch("http://192.168.88.187:5000/driver", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -116,7 +120,7 @@ function nextStop() {
   const data = {
     next_stop: true,
   };
-  fetch("http://192.168.0.91:5000/next_stop", {
+  fetch("http://192.168.88.187:5000/next_stop", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -129,7 +133,7 @@ function CurrentStop() {
   const data = {
     current_stop: true,
   };
-  fetch("http://192.168.0.91:5000/current_stop", {
+  fetch("http://192.168.88.187:5000/current_stop", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -142,6 +146,8 @@ function checkOut() {
   const variantsDiv = document.getElementById("versions");
   variantsDiv.style.display = "flex";
   buttonsDiv.style.display = "none";
+  form.style.display = "flex";
+  lineDataDiv.style.display = "none";
 }
 
 function LoadLine(data) {
@@ -149,5 +155,12 @@ function LoadLine(data) {
   variantsDiv.style.display = "none";
   addStopButtons(buttonsDiv);
   buttonsDiv.style.display = "flex";
-  console.log(data);
+  form.style.display = "none";
+  lineDataDiv.style.display = "flex";
+
+  lineDiv.innerText = data.line;
+  directionDiv.innerText = data.route.direction.toUpperCase();
+  data.route.stops.forEach((stop) => {
+    console.log(`${stop.name} ${stop.stop_number}`);
+  });
 }

@@ -12,7 +12,7 @@
     />
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script>
-      const socket = io("http://192.168.88.105:5000");
+      const socket = io("http://192.168.88.187:5000");
       socket.on("connect", () => {
         console.log("WebSocket connected");
       });
@@ -32,11 +32,49 @@
   <body>
     <header>
       <form onsubmit="variants(event)" id="form">
-        <input type="text" name="line" placeholder="Line" required />
-        <button id="show_variants" type="submit">Show variants</button>
+        <input type="text" name="line" placeholder="Linia" id="line" required />
+        <p>/</p>
+        <input type="text" name="variant" id="brigade" required />
+        <button id="show_variants" type="submit">Szukaj</button>
       </form>
+      <div id="line_data">
+        <div id="line"></div>
+        <svg
+          width="75px"
+          height="75px"
+          viewBox="0 0 24.00 24.00"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          stroke="#eee"
+          transform="matrix(1, 0, 0, 1, 0, 0)"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke="#eee"
+            stroke-width="0.048"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M5 12H19M19 12L13 6M19 12L13 18"
+              stroke="#eee"
+              stroke-width="2.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </g>
+        </svg>
+        <div id="direction"></div>
+      </div>
     </header>
-
+    <main>
+      <form onsubmit="variants(event)" id="driver_number">
+        <input type="text" name="driver_number" placeholder="Numer" required />
+        <button id="show_variants" type="submit">Zaloguj</button>
+      </form>
+    </main>
     <div id="versions"></div>
     <div id="stops"></div>
     <div id="buttons"></div>
