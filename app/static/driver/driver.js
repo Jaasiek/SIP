@@ -6,15 +6,19 @@ socket.on("update_route", (data) => {
 
 const buttonsDiv = document.querySelector("#buttons");
 const form = document.getElementById("form");
+const formDriver = document.getElementById("driver_number");
 const variantsDiv = document.getElementById("versions");
 const lineDataDiv = document.getElementById("line_data");
 const lineDiv = document.getElementById("line");
 const directionDiv = document.getElementById("direction");
+// const timeDiv = document.getElementById("time");
 
 function post_line(key) {
   const data = {
-    line: form.elements["line"].value.toUpperCase(),
+    line: form.elements["lineInput"].value.toUpperCase(),
+    brigade: form.elements["brigade"].value,
     variant: key.toUpperCase(),
+    driverID: formDriver.elements["driver_number"].value,
   };
 
   fetch("http://192.168.88.187:5000/route_post", {
@@ -24,6 +28,13 @@ function post_line(key) {
     },
     body: JSON.stringify(data),
   });
+}
+
+function login(event) {
+  event.preventDefault();
+
+  formDriver.style.display = "none";
+  form.style.display = "flex";
 }
 
 function variants(event) {
@@ -158,9 +169,51 @@ function LoadLine(data) {
   form.style.display = "none";
   lineDataDiv.style.display = "flex";
 
-  lineDiv.innerText = data.line;
-  directionDiv.innerText = data.route.direction.toUpperCase();
+  lineDiv.innerText = `${data.line}/${data.brigade}`;
+
   data.route.stops.forEach((stop) => {
     console.log(`${stop.name} ${stop.stop_number}`);
   });
+
+  function checkScrollingDirection() {
+    const direction = document.getElementById("direction");
+    if (direction.scrollWidth > 550) {
+      direction.classList.add("scrolling");
+    } else {
+      direction.classList.remove("scrolling");
+    }
+  }
+  if (
+    data.route.direction.toUpperCase().startsWith("ZEA") ||
+    data.route.direction.toUpperCase().startsWith("WYDZIAŁ")
+  ) {
+    directionDiv.innerText = "Przejazd Techniczny";
+    directionDiv.style.color = "red";
+  } else {
+    directionDiv.innerText = data.route.direction.toUpperCase();
+    directionDiv.style.color = "white";
+  }
+  checkScrollingDirection();
 }
+
+// function time() {
+//   const date_creator = new Date();
+//   function addZero(i) {
+//     if (i < 10) {
+//       i = "0" + i;
+//     }
+//     return i;
+//   }
+
+//   const hours = date_creator.getHours();
+//   const minutes = date_creator.getMinutes();
+//   const seconds = date_creator.getSeconds();
+
+//   timeDiv.innerText = `${addZero(hours)}:${addZero(minutes)}:${addZero(
+//     seconds
+//   )}`;
+// }
+
+// setInterval(() => {
+//   time();
+// }, 500);

@@ -68,6 +68,8 @@ def get_route():
     data = request.get_json()
     line = data.get("line")
     variant = data.get("variant")
+    brigade = data.get("brigade")
+    driverID = data.get("driverID")
     stop_iterator = 0
     try:
         stops = getting_route(line, variant)
@@ -79,6 +81,8 @@ def get_route():
                 "line": line,
                 "streets": stops["streets"],
                 "variant": variant,
+                "brigade": brigade,
+                "driverID": driverID,
             },
         )
         return (

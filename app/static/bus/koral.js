@@ -24,10 +24,6 @@ const stop_name_div = document.querySelector("#stop_name");
 const info_stop_div = document.querySelector("#info_stop");
 const announcement_span = document.querySelector("#announcement");
 
-function sanitizeStopName(stopName) {
-  return stopName.replace(/[\s\-."'()]+/g, "");
-}
-
 function LoadLine(data) {
   divStopsContent = "";
   line_div.style.background = "none";
@@ -92,14 +88,13 @@ function LoadLine(data) {
         ? "/static/bus/icons/stop_on_request.svg"
         : "/static/bus/icons/stop.svg";
 
-    let stop_name = sanitizeStopName(stop.name);
+    let stop_name = stop.name.replace(/[\s\-."']+/g, "");
 
     stopElement.innerHTML = `
-    <span class="rotated-stop">
+    <span class="rotated-stop" id="${stop_name}${stop.stop_number}">
       <img src="${imgSrc}" />
       <p>${stop.name}</p>
     </span>
-    </div>
   `;
 
     stops_div.appendChild(stopElement);
@@ -109,15 +104,16 @@ function LoadLine(data) {
 function NextStop(data) {
   announcement_span.style.color = "black";
   if (previoust_stop != "") {
-    document.querySelector(`#${sanitizeStopName(previoust_stop)}`).style.color =
-      "black";
+    document.querySelector(
+      `#${previoust_stop.replace(/[\s\-."']+/g, "")}`
+    ).style.color = "black";
   }
   info_stop_div.innerText = "Następny przystanek: ";
   stop_name_div.innerText = data.next_stop;
 
   if (previoust_stop !== "") {
     document
-      .querySelector(`#${sanitizeStopName(previoust_stop)}`)
+      .querySelector(`#${previoust_stop.replace(/[\s\-."']+/g, "")}`)
       .classList.add("disabled");
   }
 }
@@ -130,13 +126,13 @@ function CurrentStop(data) {
   if (data.current_stop.endsWith("NA ŻĄDANIE (ON REQUEST)")) {
     const name = data.current_stop.replace("- NA ŻĄDANIE (ON REQUEST)", " ");
     document.querySelector(
-      `#${sanitizeStopName(name)}${data.stop_number}`
+      `#${name.replace(/[\s\-."']+/g, "")}${data.stop_number}`
     ).style.color = "rgb(139, 9, 139)";
     previoust_stop = `${name}${data.stop_number}`;
   } else {
     previoust_stop = `${data.current_stop}${data.stop_number}`;
     document.querySelector(
-      `#${sanitizeStopName(data.current_stop)}${data.stop_number}`
+      `#${data.current_stop.replace(/[\s\-."']+/g, "")}${data.stop_number}`
     ).style.color = "rgb(139, 9, 139)";
   }
 }
@@ -161,7 +157,7 @@ function TimeLoad() {
   time.innerText = `${addZero(hours)}:${addZero(minutes)}`;
   day_of_the_week.innerText = `${weekdays[day]}`;
   date.innerText = `${addZero(day_of_the_month.toString())}.${addZero(
-    (month + 1).toString()
+    month.toString()
   )}.${year.toString()}`;
 }
 
