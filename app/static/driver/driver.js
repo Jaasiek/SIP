@@ -11,6 +11,8 @@ const variantsDiv = document.getElementById("versions");
 const lineDataDiv = document.getElementById("line_data");
 const lineDiv = document.getElementById("line");
 const directionDiv = document.getElementById("direction");
+const driverIDp = document.getElementById("driverID");
+const driverDiv = document.getElementById("driver");
 // const timeDiv = document.getElementById("time");
 
 function post_line(key) {
@@ -170,6 +172,8 @@ function LoadLine(data) {
   lineDataDiv.style.display = "flex";
 
   lineDiv.innerText = `${data.line}/${data.brigade}`;
+  driverDiv.style.display = "flex";
+  driverIDp.innerText = data.driverID;
 
   data.route.stops.forEach((stop) => {
     console.log(`${stop.name} ${stop.stop_number}`);
@@ -177,16 +181,13 @@ function LoadLine(data) {
 
   function checkScrollingDirection() {
     const direction = document.getElementById("direction");
-    if (direction.scrollWidth > 550) {
+    if (direction.scrollWidth > 475) {
       direction.classList.add("scrolling");
     } else {
       direction.classList.remove("scrolling");
     }
   }
-  if (
-    data.route.direction.toUpperCase().startsWith("ZEA") ||
-    data.route.direction.toUpperCase().startsWith("WYDZIAŁ")
-  ) {
+  if (data.variant.startsWith("TD") || data.variant.startsWith("TZ")) {
     directionDiv.innerText = "Przejazd Techniczny";
     directionDiv.style.color = "red";
   } else {

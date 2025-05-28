@@ -10,7 +10,6 @@ body {
 header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   margin: 10px;
 }
 
@@ -150,6 +149,7 @@ div#line_data > div {
 
 #direction-container {
   width: fit-content;
+  max-width: 480px;
   padding: 0px 10px;
   overflow: hidden;
   position: relative;
@@ -165,6 +165,12 @@ div#line_data > div {
 #direction:not(.scrolling) {
   animation: none;
   padding-left: 0;
+}
+
+#driver {
+  display: none;
+  align-items: center;
+  margin-right: 10px;
 }
 
 @keyframes scroll-text {
